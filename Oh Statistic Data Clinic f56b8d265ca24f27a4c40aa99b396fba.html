@@ -1,0 +1,722 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Oh Statistic Data Clinic</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f56b8d26-5ca2-4f27-a4c4-0aa99b396fba" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1506792006437-256b665541e2?ixlib=rb-4.1.0&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chart-mixed_green.svg"/></div><h1 class="page-title" dir="auto">Oh Statistic Data Clinic</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="ltr"><figure class="block-color-pink_background callout" style="white-space:pre-wrap;display:flex" id="64633557-4b90-4c20-a47c-90cbe2638563"><div style="font-size:1.5em"><span class="icon">📰</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="6fd0caa5-9599-4c07-8029-9c880a5d62f0" class=""><strong>Medical doctors doing research in Malaysia get publication-ready statistical results through my 1-1 online consulting and live data-analysis support.</strong></p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="2adddfa0-335d-8090-b13b-fe9f086c8f92"><div style="font-size:1.5em"><span class="icon">🖱️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2acddfa0-335d-803b-ac2f-fa59a5f037a2" class=""><a href="https://www.linkedin.com/newsletters/unlocking-data-insights-weekly-7030300721342271488/">Join 600+ medical doctors, students, and researchers who are leveling up their research skills every week.</a> </p></div></div></figure></div><div style="display:contents" dir="auto"><h3 id="51bc1990-afee-4d9d-950a-68ff7fe4db37" class="">Site navigation</h3></div><div style="display:contents" dir="auto"><ul id="fb7b0cdd-4a5b-4dae-bc7e-c76cb15a6319" class="bulleted-list"><li style="list-style-type:disc"><a href="Oh%20Statistic%20Data%20Clinic%20f56b8d265ca24f27a4c40aa99b396fba.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chart-mixed_green.svg"/>Oh Statistic Data Clinic</a></li></ul></div><div style="display:contents" dir="auto"><ul id="e806d6ef-0feb-42e6-ba6b-f7db54659943" class="bulleted-list"><li style="list-style-type:disc"><a href="Oh%20Statistic%20Data%20Clinic/Services%200ce4939b99c04015afd82f64060edc85.html"><span class="icon">🧰</span>Services</a> </li></ul></div><div style="display:contents" dir="auto"><ul id="a91dd4af-562d-4124-af4c-7cd49509946a" class="bulleted-list"><li style="list-style-type:disc"><a href="Oh%20Statistic%20Data%20Clinic/About%206e0d2842de0b43c8a945081449bd8903.html"><span class="icon">👤</span>About</a> </li></ul></div><div style="display:contents" dir="auto"><ul id="30eddfa0-335d-8034-a61f-ca3e0a800035" class="bulleted-list"><li style="list-style-type:disc"><a href="Oh%20Statistic%20Data%20Clinic/Contact%20&amp;%20Booking%20256066026b9149a49c41371476031a86.html"><span class="icon">📬</span>Contact &amp; Booking</a> </li></ul></div><div style="display:contents" dir="auto"><ul id="bffd1c09-706d-4a43-95b6-707597b2d83d" class="bulleted-list"><li style="list-style-type:disc"><a href="Oh%20Statistic%20Data%20Clinic/Case%20collections%202adddfa0335d80059ab6daa13716f106.html"><span class="icon">😃</span>Case collections</a></li></ul></div><div style="display:contents" dir="auto"><ul id="4fdede86-3250-4321-9e08-497e362a355e" class="bulleted-list"><li style="list-style-type:disc"><a href="Oh%20Statistic%20Data%20Clinic/Degrees%20of%20Freedom%20(df)%202faddfa0335d80818577f8f01e739cd5.html">Degrees of Freedom (df)</a></li></ul></div><div style="display:contents" dir="auto"><h1 id="39873a89-4d7c-47a2-b0ac-763be211e9e3" class="">🌈 About Me</h1></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2acddfa0-335d-804d-9c75-fb42f2ec3c14"><div style="font-size:1.5em"><span class="icon">👨🏻‍⚕️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2ca0b1a0-faca-473b-832e-62bbf518b32f" class=""><strong>Hello! I&#x27;m Chen Wei, a pharmacist and biostatistician based in Kuala Lumpur. </strong></p></div><div style="display:contents" dir="auto"><p id="2f9ddfa0-335d-80da-868c-ffa828f1fc20" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2f9ddfa0-335d-80f6-9e6e-f1c23d5b6692" class="">My career began as a Pharmacist in KKM, followed by a role as a GCP Clinical Trial Inspector.</p></div><div style="display:contents" dir="auto"><p id="2f9ddfa0-335d-80a0-b040-cd734b37bc5f" class=""><br/>In 2016, I pursued my MSc in Medical Statistics. It was during this time that I launched &quot;Data Clinic,&quot; a passion project where I began guiding medical doctors through their Master&#x27;s research analysis.</p></div><div style="display:contents" dir="auto"><p id="2f9ddfa0-335d-8013-9528-d872a1e0fcdd" class=""><br/>I subsequently moved into the private sector to specialize in Real-World Evidence (RWE) and Clinical Trials. Currently, I work as a Clinical Trial Programmer focusing on clinical trials and HEOR.</p></div><div style="display:contents" dir="auto"><p id="2acddfa0-335d-80d6-aa7d-eadc9f312e13" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2acddfa0-335d-80c3-9177-e056848fabc1" class="">I help medical doctors doing research turn complex data into clear, accurate, publication-ready results.</p></div><div style="display:contents" dir="auto"><p id="2adddfa0-335d-80e2-a3a1-ccd950fdf560" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2acddfa0-335d-8081-bd8b-c9697b6fdd6f" class="">Many doctors feel unsure about statistics or get stuck during analysis and revisions —</p></div><div style="display:contents" dir="auto"><p id="2acddfa0-335d-80a0-8b4e-f9879bfa9368" class="">that’s where I support you step by step.</p></div><div style="display:contents" dir="auto"><p id="2adddfa0-335d-8041-ae59-f62a1bc48183" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2acddfa0-335d-80a0-ab18-f2de122bedf3" class="">Through 1-1 online consultations and live project sessions using your own data,</p></div><div style="display:contents" dir="auto"><p id="2f9ddfa0-335d-805e-b528-e1a5d8f88c76" class="">I help you</p></div><div style="display:contents" dir="auto"><p id="2acddfa0-335d-80e6-b70f-ef8baec5fc05" class="">📌 choose the right tests,</p></div><div style="display:contents" dir="auto"><p id="2acddfa0-335d-80e9-be2e-cf09a0316e8f" class="">📌 run the analysis, interpret outputs,</p></div><div style="display:contents" dir="auto"><p id="2acddfa0-335d-80ed-a8c8-f5e80b46d844" class="">📌 prepare results for thesis or publication.</p></div><div style="display:contents" dir="auto"><p id="2adddfa0-335d-80d2-a777-fa9fd465697b" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2acddfa0-335d-8036-9752-c1af3e862edb" class=""><strong>My goal:</strong></p></div><div style="display:contents" dir="auto"><p id="2acddfa0-335d-807b-9483-cf304cd12e35" class="">make your research faster, easier, and stress-free.</p></div></div></figure></div><div style="display:contents" dir="auto"><h1 id="75326ba7-4f32-4267-b516-3430ddaa6cba" class="">💼 Experience</h1></div><div style="display:contents" dir="auto"><h3 id="252ddfa0-335d-8079-8410-e1609b23ce56" class="">Statistical Programmer - Tigermed | September 2025 - Present</h3></div><div style="display:contents" dir="auto"><ul id="252ddfa0-335d-8085-af7a-e2eae82880b5" class="bulleted-list"><li style="list-style-type:disc">Providing statistical programming support for Table, Listing and Figure in <strong>clinical trials</strong>.</li></ul></div><div style="display:contents" dir="auto"><h3 id="252ddfa0-335d-8075-858b-fa4a8c415b3b" class="">Statistical Programmer - IQVIA | March 2025 - September</h3></div><div style="display:contents" dir="auto"><ul id="2adddfa0-335d-80e2-b37d-cf154180f95c" class="bulleted-list"><li style="list-style-type:disc">Providing statistical programming support for <strong>Real World Evidence</strong> Research</li></ul></div><div style="display:contents" dir="auto"><ul id="252ddfa0-335d-802e-a068-f190ca0f9569" class="bulleted-list"><li style="list-style-type:disc">Write Statistical Analysis Plan and Table, Listing Figure</li></ul></div><div style="display:contents" dir="auto"><h3 id="b67af72c-6606-463a-82aa-6830cfccc6f7" class="">Biostatistician - Medical Research  | June 2016 - March 2025</h3></div><div style="display:contents" dir="auto"><ul id="252ddfa0-335d-80d6-99e5-faadc6708357" class="bulleted-list"><li style="list-style-type:disc">Conducted statistical analysis to support medical research and clinical studies.</li></ul></div><div style="display:contents" dir="auto"><h3 id="6ca3eaa7-cbc0-4cc9-8e30-5e047325db61" class="">Pharmacist | December 2008 - November 2012</h3></div><div style="display:contents" dir="auto"><ul id="8ae252fc-b02e-4d71-9452-2befee2423a2" class="bulleted-list"><li style="list-style-type:disc">Provided patient care in clinical settings.</li></ul></div><div style="display:contents" dir="auto"><h1 id="d143f728-03f3-49c5-97d7-8d6c773091e8" class="">🎓 Education</h1></div><div style="display:contents" dir="auto"><h3 id="43ff7c8e-f138-40f4-989b-35cc8237d1df" class="">Master of Medical Statistic - USM | 2018</h3></div><div style="display:contents" dir="auto"><ul id="f74f3ed4-5535-4c59-8efc-432a49442607" class="bulleted-list"><li style="list-style-type:disc">Specialized in date data management, survival analysis and cox regression </li></ul></div><div style="display:contents" dir="auto"><ul id="f5ce01ba-decf-4e48-8034-abbcbe4f6754" class="bulleted-list"><li style="list-style-type:disc">Thesis: &quot;Breast Cancer Genotype Survival Analysis&quot;</li></ul></div><div style="display:contents" dir="auto"><h3 id="ee02c98c-13a9-4373-bba7-c7660531ee5f" class="">Bachelor of Science (Pharmacist) - Medical University of Kaohsiung, Taiwan | 2008</h3></div><div style="display:contents" dir="auto"><ul id="43502c1a-cd4d-4264-b03d-9bf171c3e091" class="bulleted-list"><li style="list-style-type:disc">Graduated with Honors</li></ul></div><div style="display:contents" dir="auto"><h1 id="3c6820d9-3655-4e03-9eee-913c69b3cd88" class="">🚀 Projects</h1></div><div style="display:contents" dir="auto"><p id="af870e46-4a1e-45bb-a424-648932987fb9" class="">I have contributed to over 200 projects, providing statistical analysis, consultation, and support for theses and publications across therapeutic areas like oncology, cardiology, and endocrinology. My expertise in statistical methods, including regression modeling, survival analysis, and hypothesis testing, using tools like R, SAS, and SPSS, ensures robust, evidence-based solutions for medical research.</p></div><div style="display:contents" dir="auto"><h1 id="a5ee92c6-d7dd-470c-b685-7d77732b25ec" class="">🔨 Skills</h1></div><div style="display:contents" dir="auto"><ul id="d19665de-1e7c-4362-a990-a674d02f5d54" class="bulleted-list"><li style="list-style-type:disc">Statistical Analysis</li></ul></div><div style="display:contents" dir="auto"><ul id="252ddfa0-335d-80a5-b921-c65cec338933" class="bulleted-list"><li style="list-style-type:disc">Hypothesis Testing</li></ul></div><div style="display:contents" dir="auto"><ul id="252ddfa0-335d-8040-8f67-fcd807b3ff26" class="bulleted-list"><li style="list-style-type:disc">Regression Modeling</li></ul></div><div style="display:contents" dir="auto"><ul id="252ddfa0-335d-8032-be85-e721a6afd668" class="bulleted-list"><li style="list-style-type:disc">Survival Analysis</li></ul></div><div style="display:contents" dir="auto"><ul id="252ddfa0-335d-8051-9653-e95b6bd9736d" class="bulleted-list"><li style="list-style-type:disc">SPSS/R</li></ul></div><div style="display:contents" dir="auto"><ul id="2f9ddfa0-335d-80fe-a8cc-e720614a725b" class="bulleted-list"><li style="list-style-type:disc">Open Software (JASP, Jamovi, Numiqo…) </li></ul></div><div style="display:contents" dir="auto"><ul id="252ddfa0-335d-80dc-b4e6-ff5b4e9ed93d" class="bulleted-list"><li style="list-style-type:disc">Study Design</li></ul></div><div style="display:contents" dir="auto"><ul id="252ddfa0-335d-8095-be52-f1437a7cf447" class="bulleted-list"><li style="list-style-type:disc">Data Management</li></ul></div><div style="display:contents" dir="auto"><ul id="252ddfa0-335d-80f6-8253-f0f9783a837c" class="bulleted-list"><li style="list-style-type:disc">Data Interpretation </li></ul></div><div style="display:contents" dir="auto"><ul id="252ddfa0-335d-8080-966b-de84069acae8" class="bulleted-list"><li style="list-style-type:disc">Ethics and Regulatory Compliance</li></ul></div><div style="display:contents" dir="auto"><ul id="252ddfa0-335d-8045-96f2-d654db879870" class="bulleted-list"><li style="list-style-type:disc">Publication Support</li></ul></div><div style="display:contents" dir="auto"><ul id="252ddfa0-335d-803b-ba18-d4dabf76f327" class="bulleted-list"><li style="list-style-type:disc">Data Visualization / Figure</li></ul></div><div style="display:contents" dir="auto"><ul id="2f9ddfa0-335d-804b-be8e-c5624d30289f" class="bulleted-list"><li style="list-style-type:disc">Sample size (G*Power, OpenEpi, PS)</li></ul></div><div style="display:contents" dir="auto"><h1 id="252ddfa0-335d-80ca-be2c-c61f4451312a" class="">Services</h1></div><div style="display:contents" dir="auto"><p id="259ddfa0-335d-80d1-ab2e-ece3564a2a76" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2adddfa0-335d-80f4-b844-cc1d7f3b0d7b" class="">Whenever you are ready, here are two ways I can support your research journey:</p></div><div style="display:contents" dir="auto"><ol type="1" id="2adddfa0-335d-80f1-987b-f4bcc3f7f5e3" class="numbered-list" start="1"><li><strong>The 1-1 online consulting</strong>: We can discuss anything from your initial proposal to final publication. Together, we will brainstorm your study design, define your variables, and navigate the analysis. I’ll show you how to transform your collected data into professional tables and clear results that are ready for presentation.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2adddfa0-335d-80ad-9ece-e515d6b5aa21" class="numbered-list" start="2"><li><strong>Table Construction Assistance: </strong>I support you in building clean, publication-ready tables using GTSummary in R - including demographics tables, outcome summaries and regression models</li></ol></div><div style="display:contents" dir="auto"><h1 id="25eddfa0-335d-80d5-86d0-f7f1f296c3e6" class=""><mark class="highlight-blue">1-1 online consulting</mark></h1></div><div style="display:contents" dir="auto"><p id="260ddfa0-335d-802c-9ce9-cad4d1ca3c3b" class=""><strong>Online: RM 200 / USD 50 per hour</strong></p></div><div style="display:contents" dir="auto"><p id="260ddfa0-335d-807e-9186-f3b3259d3450" class=""><strong>Face-to-face: RM 250 </strong></p></div><div style="display:contents" dir="ltr"><table id="37c6b2ae-d8d5-4d82-9fdb-20661f392dec" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="6314a76b-6f86-49b3-b52a-556d6b9547ae"><th id="B;zT" class="simple-table-header-color simple-table-header">Stage</th><th id="=@lX" class="simple-table-header-color simple-table-header" style="width:407.99481201171875px"><strong>Thesis / Project Support Areas</strong></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="97438e51-977e-432e-bf27-62f2fa69bc21"><td id="B;zT" class="">Planning</td><td id="=@lX" class="" style="width:407.99481201171875px">Study design, study objective and choice of endpoint</td></tr></div><div style="display:contents" dir="ltr"><tr id="d5f83f01-f83c-4a33-b887-77265a3394bf"><td id="B;zT" class="">Planning</td><td id="=@lX" class="" style="width:407.99481201171875px">Sample Size calculation <em>(Popular)</em></td></tr></div><div style="display:contents" dir="ltr"><tr id="5ca2a874-fa05-405a-bee6-7ddf3568a45a"><td id="B;zT" class="">Planning</td><td id="=@lX" class="" style="width:407.99481201171875px">Choice of statistical analysis / Table Shell</td></tr></div><div style="display:contents" dir="ltr"><tr id="19f198d7-14f2-4d85-bf38-609355fd33fd"><td id="B;zT" class="">Planning</td><td id="=@lX" class="" style="width:407.99481201171875px">PowerPoint presentation review</td></tr></div><div style="display:contents" dir="ltr"><tr id="5f80fa7c-8064-4bac-a52f-65040de7b705"><td id="B;zT" class="">Data Collection</td><td id="=@lX" class="" style="width:407.99481201171875px">Data Capture, Data Quality, Data Preparation for Analysis</td></tr></div><div style="display:contents" dir="ltr"><tr id="3c09a585-3bb9-4fd2-a299-bf1104d05bff"><td id="B;zT" class="">Data Analysis <em>(Most Popular)</em></td><td id="=@lX" class="" style="width:407.99481201171875px">Live Project (Data Analysis with Your Dataset and Protocol) <br/><strong>You will receive:<br/></strong>🎥 Video Recording of the session<br/>📝 Discussion Notes<br/>📂 Cleaned Dataset<br/>📊 Full Software Output<br/>💻 Syntax / R-Code</td></tr></div><div style="display:contents" dir="ltr"><tr id="41eaa616-22ed-4dde-bf4d-b7cabb77d0fa"><td id="B;zT" class="">Writing</td><td id="=@lX" class="" style="width:407.99481201171875px">Tabulation and Interpretation</td></tr></div><div style="display:contents" dir="ltr"><tr id="d283c2cc-2adb-43be-9e2f-5fc07fe97226"><td id="B;zT" class="">Writing</td><td id="=@lX" class="" style="width:407.99481201171875px">PowerPoint presentation review</td></tr></div><div style="display:contents" dir="ltr"><tr id="2b6deab4-27de-43d1-852f-75841bfaf026"><td id="B;zT" class="">Manuscript Help &amp; Reviewer Response</td><td id="=@lX" class="" style="width:407.99481201171875px">Assistance with addressing reviewer inquiries for peer-reviewed publications.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="260ddfa0-335d-80dc-9085-f23126ecb91c" class=""><strong>Footnote:</strong> For self-funded projects (non-grant/non-corporate), a tiered rate applies: RM200/hr for the first 2 hours, RM150/hr for the next 2 hours, and RM100/hr for the 5th hour onwards.<br/><br/>Consultation Appointment: <a href="https://calendar.app.google/JuQq3GCrWPDezAHn7">https://calendar.app.google/JuQq3GCrWPDezAHn7</a></p></div><div style="display:contents" dir="auto"><h1 id="25fddfa0-335d-80b3-85b8-ea94810d39b0" class=""><mark class="highlight-blue">Table Construction Assistance</mark></h1></div><div style="display:contents" dir="auto"><p id="25fddfa0-335d-8023-92c4-f62005ea4f01" class="">Software: R </p></div><div style="display:contents" dir="auto"><p id="2a0ddfa0-335d-8097-8714-d9820bfd60e2" class="">Deliverables: <strong>Tables in HTML</strong> that can copy into Word</p></div><div style="display:contents" dir="auto"><p id="2a0ddfa0-335d-807b-b3e2-dd6be71bd86d" class="">Timeline: &gt; 2 week</p></div><div style="display:contents" dir="auto"><p id="2a0ddfa0-335d-80e9-ae1c-f18c6e341513" class="">Pre-requisite: <strong>Table Shell, Data Derivation Plan</strong> and <strong>Analysis Plan</strong></p></div><div style="display:contents" dir="auto"><ul id="25fddfa0-335d-80b3-88bb-d05b6b498149" class="bulleted-list"><li style="list-style-type:disc"><strong>Standard Table</strong>: RM50 - RM300 per table.</li></ul></div><div style="display:contents" dir="auto"><ul id="25fddfa0-335d-807e-ac87-c96bf24a3e8a" class="bulleted-list"><li style="list-style-type:disc">Rerun of existing table: RM50.</li></ul></div><div style="display:contents" dir="auto"><ul id="25fddfa0-335d-80f3-a7ae-d63cffddf66f" class="bulleted-list"><li style="list-style-type:disc">Variable labeling, levels, and units: RM25 per variable.</li></ul></div><div style="display:contents" dir="auto"><ul id="25fddfa0-335d-80fe-bced-d1e42c5381a9" class="bulleted-list"><li style="list-style-type:disc"><strong>Custom Tables/Figures</strong>: RM200 per hour for tailored solutions.</li></ul></div><div style="display:contents" dir="auto"><ul id="25fddfa0-335d-8013-acd9-e27e40af75e6" class="bulleted-list"><li style="list-style-type:disc"><strong>Variable Cleaning or Derivation</strong>: RM200 per hour for cleaning variables or deriving new variables to meet study objectives if issues are identified after output.</li></ul></div><div style="display:contents" dir="auto"><ul id="260ddfa0-335d-80ea-89e0-f8fc17997b72" class="bulleted-list"><li style="list-style-type:disc"><a href="https://forms.gle/U5rxNt1qTzz56cRv6">https://forms.gle/U5rxNt1qTzz56cRv6</a></li></ul></div><div style="display:contents" dir="auto"><ul id="2adddfa0-335d-8041-85aa-d42b67acc7a1" class="bulleted-list"><li style="list-style-type:disc">Book Enquiry Appointment:  <a href="https://calendar.app.google/1Nfvffv9bkYzs9BN9">https://calendar.app.google/1Nfvffv9bkYzs9BN9</a></li></ul></div><div style="display:contents" dir="auto"><h1 id="76d2f3c3-5c48-4c5d-8b96-d9f255725c31" class="">📬 Contact</h1></div><div style="display:contents" dir="ltr"><figure id="2adddfa0-335d-8033-a075-c38b6f8fde9b" class="image"><a href="Oh%20Statistic%20Data%20Clinic/Consulting_proposal.jpg"><img style="width:707.9827880859375px" src="Oh%20Statistic%20Data%20Clinic/Consulting_proposal.jpg"/></a></figure></div><div style="display:contents" dir="auto"><p id="b0f0496d-b5df-4d6d-8799-b893b539908e" class="">Let&#x27;s create something amazing together! Reach out to me at:</p></div><div style="display:contents" dir="auto"><ul id="eda68a1d-e545-4b2d-9b2d-9b6f665d0f64" class="bulleted-list"><li style="list-style-type:disc">Email: ohstatisticdataclinic@gmail.com</li></ul></div><div style="display:contents" dir="auto"><ul id="0b657a29-9aca-484a-8b88-8c54f8a72360" class="bulleted-list"><li style="list-style-type:disc">LinkedIn: <a href="http://linkedin.com/in/chenwei-oh">linkedin.com/in/chenwei-oh</a></li></ul></div><div style="display:contents" dir="auto"><ul id="260ddfa0-335d-804b-8b7e-cb9c8002498a" class="bulleted-list"><li style="list-style-type:disc">LinkedIn: <a href="https://www.linkedin.com/company/oh-statistic">https://www.linkedin.com/company/oh-statistic</a></li></ul></div><div style="display:contents" dir="auto"><ul id="2acddfa0-335d-80f8-9c6e-eb2833f14a31" class="bulleted-list"><li style="list-style-type:disc">Gallery: <a href="https://www.instagram.com/ohstatistic">https://www.instagram.com/ohstatistic</a></li></ul></div><div style="display:contents" dir="auto"><ul id="260ddfa0-335d-80e9-bb88-fc05684beb40" class="bulleted-list"><li style="list-style-type:disc">Facebook: <a href="https://www.facebook.com/ohstatistic/">https://www.facebook.com/ohstatistic/</a></li></ul></div><div style="display:contents" dir="auto"><ul id="2f9ddfa0-335d-807b-8d2b-f270685b97b7" class="bulleted-list"><li style="list-style-type:disc">Data Clinic: <a href="Oh%20Statistic%20Data%20Clinic%20f56b8d265ca24f27a4c40aa99b396fba.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chart-mixed_green.svg"/>Oh Statistic Data Clinic</a> </li></ul></div><div style="display:contents" dir="auto"><ul id="30eddfa0-335d-80ad-b92d-eee12dc94ef0" class="bulleted-list"><li style="list-style-type:disc">BuyMeaCoffee: <a href="http://buymeacoffee.com/ohchenwei">buymeacoffee.com/ohchenwei</a></li></ul></div><div style="display:contents" dir="auto"><ul id="30eddfa0-335d-80ed-958f-d6cb5d86e18d" class="bulleted-list"><li style="list-style-type:disc">Join Whatsapp Group: <a href="https://chat.whatsapp.com/F7LvOVKOu4H2NZGiZm5LPR?mode=ac_t">https://chat.whatsapp.com/F7LvOVKOu4H2NZGiZm5LPR?mode=ac_t</a></li></ul></div><div style="display:contents" dir="auto"><h3 id="2f9ddfa0-335d-8014-86de-d077268205f2" class="">Book a call</h3></div><div style="display:contents" dir="auto"><ul id="25eddfa0-335d-8040-85ec-e4f4b1a9b56e" class="bulleted-list"><li style="list-style-type:disc">Book 1-1 enquiry call:  <a href="https://calendar.app.google/1Nfvffv9bkYzs9BN9">https://calendar.app.google/1Nfvffv9bkYzs9BN9</a></li></ul></div><div style="display:contents" dir="auto"><ul id="25eddfa0-335d-80dc-834e-cd072bd44b9b" class="bulleted-list"><li style="list-style-type:disc">1-1 Online Consultation Appointment: <a href="https://calendar.app.google/JuQq3GCrWPDezAHn7">https://calendar.app.google/JuQq3GCrWPDezAHn7</a></li></ul></div><div style="display:contents" dir="auto"><h3 id="30eddfa0-335d-8066-a5a0-d15dd4edae72" class="">What to prepare before the call</h3></div><div style="display:contents" dir="auto"><ul id="30eddfa0-335d-801a-848d-f635cc5aab8f" class="bulleted-list"><li style="list-style-type:disc">Your research question and study objective</li></ul></div><div style="display:contents" dir="auto"><ul id="30eddfa0-335d-80fc-aca6-d0c8c95d2507" class="bulleted-list"><li style="list-style-type:disc">Study design and outcomes</li></ul></div><div style="display:contents" dir="auto"><ul id="30eddfa0-335d-806a-badf-d2890abe2d72" class="bulleted-list"><li style="list-style-type:disc">How many variables you have, and where your data is stored (Excel, SPSS, REDCap, etc.)</li></ul></div><div style="display:contents" dir="auto"><ul id="30eddfa0-335d-80ac-ac08-c9e3bf213357" class="bulleted-list"><li style="list-style-type:disc">Any deadline (proposal submission, viva, journal revision)</li></ul></div><div style="display:contents" dir="auto"><p id="2adddfa0-335d-809e-bdb5-c3f2b5579bc3" class="">
+</p></div><div style="display:contents" dir="auto"><h1 id="2adddfa0-335d-8067-b936-e77b6bdc73db" class="">⭐ <strong>Case Sessions: How I Help Medical Doctors Solve Research Problems</strong></h1></div><div style="display:contents" dir="auto"><p id="2adddfa0-335d-805d-b64d-eeaa92d54e38" class=""><em>A collection of real cases showing how I guide doctors through their research challenges.</em></p></div><div style="display:contents" dir="auto"><p id="2adddfa0-335d-80a6-8d6b-e5ac099155eb" class="">Each case summarises:</p></div><div style="display:contents" dir="auto"><ol type="1" id="2adddfa0-335d-80a8-96eb-c2cbaa8c1277" class="numbered-list" start="1"><li><strong>The problem</strong> the doctor faced</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2adddfa0-335d-80d8-a0f7-db4607d8bdc0" class="numbered-list" start="2"><li><strong>How I approached it</strong></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2adddfa0-335d-8000-874b-eb8ac24e194b" class="numbered-list" start="3"><li><strong>The solution</strong></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2adddfa0-335d-80a5-8ebb-ebc652aea082" class="numbered-list" start="4"><li><strong>The outcome</strong> (thesis-ready, publication-ready, analysis complete, etc.)</li></ol></div><div style="display:contents" dir="ltr"><figure id="2adddfa0-335d-8005-9ab6-daa13716f106" class="link-to-page"><a href="Oh%20Statistic%20Data%20Clinic/Case%20collections%202adddfa0335d80059ab6daa13716f106.html"><span class="icon">😃</span>Case collections</a></figure></div><div style="display:contents" dir="auto"><hr id="2adddfa0-335d-801f-a374-c8418eaf1615"/></div><div style="display:contents" dir="auto"><h1 id="2adddfa0-335d-8044-a2f1-fccc584f5df4" class="">⭐ Tutorial</h1></div><div style="display:contents" dir="ltr"><figure id="2faddfa0-335d-8081-8577-f8f01e739cd5" class="link-to-page"><a href="Oh%20Statistic%20Data%20Clinic/Degrees%20of%20Freedom%20(df)%202faddfa0335d80818577f8f01e739cd5.html">Degrees of Freedom (df)</a></figure></div><div style="display:contents" dir="auto"><p id="30eddfa0-335d-8093-bd87-f2064c63e873" class="">
+</p></div><div style="display:contents" dir="auto"><p id="84e3faf0-6a1b-4f03-ae77-0a59362322a9" class="">Thanks for stopping by my corner of the internet! 💫</p></div><div style="display:contents" dir="auto"><p id="56bcdc2a-4681-4bb7-b5ed-f66b0a56f32b" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="0ce4939b-99c0-4015-afd8-2f64060edc85" class="link-to-page"><a href="Oh%20Statistic%20Data%20Clinic/Services%200ce4939b99c04015afd82f64060edc85.html"><span class="icon">🧰</span>Services</a></figure></div><div style="display:contents" dir="ltr"><figure id="6e0d2842-de0b-43c8-a945-081449bd8903" class="link-to-page"><a href="Oh%20Statistic%20Data%20Clinic/About%206e0d2842de0b43c8a945081449bd8903.html"><span class="icon">👤</span>About</a></figure></div><div style="display:contents" dir="ltr"><figure id="25606602-6b91-49a4-9c41-371476031a86" class="link-to-page"><a href="Oh%20Statistic%20Data%20Clinic/Contact%20&amp;%20Booking%20256066026b9149a49c41371476031a86.html"><span class="icon">📬</span>Contact &amp; Booking</a></figure></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
