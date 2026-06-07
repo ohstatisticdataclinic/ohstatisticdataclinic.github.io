@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PFS Training Deck</title>
+    <script type="text/javascript" src="/ruxitagentjs_ICANVfqru_10333260303165926.js" data-dtconfig="rid=RID_103902212|rpid=91441012|domain=abbvienet.com|reportUrl=/rb_16a183f6-c871-4082-850b-a1f7a2ecd0b1|app=ea7c4b59f27d43eb|cuc=oao3vfhf|owasp=1|mel=100000|featureHash=ICANVfqru|dpvc=1|lastModification=1777844919940|tp=500,50,0|rdnt=1|uxrgce=1|srbbv=2|agentUri=/ruxitagentjs_ICANVfqru_10333260303165926.js"></script><style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: 15px;
+            color: #1f2937;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .deck-container {
+            width: 100%;
+            max-width: 414px;
+            height: 90vh;
+            max-height: 850px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Top Progress & Counter */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background-color: #e5e7eb;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 20;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #2563eb;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .slide-counter {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4b5563;
+            background-color: rgba(243, 244, 246, 0.9);
+            padding: 4px 8px;
+            border-radius: 12px;
+            z-index: 20;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* Slides Area */
+        .slides-wrapper {
+            flex: 1;
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 45px 20px 20px 20px;
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .slide.active {
+            opacity: 1;
+            z-index: 10;
+            pointer-events: auto;
+        }
+
+        /* Typography & Content Styles */
+        h1 { font-size: 24px; font-weight: 800; color: #111827; margin-bottom: 12px; line-height: 1.2; }
+        h2 { font-size: 20px; font-weight: 700; color: #1f2937; margin-bottom: 16px; border-bottom: 2px solid #f3f4f6; padding-bottom: 8px; }
+        h3 { font-size: 16px; font-weight: 600; color: #4b5563; margin-bottom: 12px; }
+        p { margin-bottom: 16px; }
+        
+        ul, ol { margin-bottom: 16px; padding-left: 24px; }
+        li { margin-bottom: 8px; }
+
+        .highlight { color: #2563eb; font-weight: 600; }
+        .warning { background-color: #fef3c7; padding: 10px; border-left: 4px solid #f59e0b; border-radius: 4px; margin-bottom: 16px; font-size: 14px; }
+
+        /* Tables */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 16px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 350px;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            background-color: #f8fafc;
+            font-weight: 600;
+            color: #334155;
+            white-space: nowrap;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        .indent { padding-left: 24px; color: #4b5563; }
+
+        /* Code Blocks */
+        pre {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 12px;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 16px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        code .keyword { color: #569cd6; }
+        code .string { color: #ce9178; }
+        code .comment { color: #6a9955; font-style: italic; }
+
+        /* Bottom Controls */
+        .controls {
+            height: 65px;
+            flex-shrink: 0;
+            background-color: #ffffff;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            z-index: 20;
+        }
+
+        button {
+            min-height: 44px;
+            min-width: 80px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-nav {
+            background-color: #f1f5f9;
+            color: #334155;
+        }
+
+        .btn-nav:hover:not(:disabled) { background-color: #e2e8f0; }
+        .btn-nav:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .btn-play {
+            background-color: #2563eb;
+            color: #ffffff;
+            min-width: 100px;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-play:hover { background-color: #1d4ed8; }
+        .btn-play.playing { background-color: #0f172a; }
+
+        /* Special Slide Layouts */
+        .title-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        .title-slide h1 { font-size: 28px; margin-bottom: 20px; color: #1e3a8a; }
+        .title-slide h3 { font-size: 18px; font-weight: 400; color: #4b5563; margin-bottom: 40px; }
+        .instruction { font-size: 14px; color: #9ca3af; background: #f3f4f6; padding: 10px 20px; border-radius: 20px; }
+        
+        .donation-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #ffdd00;
+            color: #000000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="deck-container" id="deck">
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="slide-counter" id="counter">1 / 10</div>
+
+    <div class="slides-wrapper" id="slidesWrapper">
+        
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <h1>A Clinical & Statistical Guide for Researchers</h1>
+            <h3>Understanding Tables, Data, and Statistics: Progression-Free Survival (PFS)</h3>
+            <div class="instruction">Press Play or Swipe left to begin</div>
+        </div>
+
+        <!-- Slide 2: What is PFS? -->
+        <div class="slide">
+            <h2>What is PFS?</h2>
+            <p><strong>Progression-Free Survival (PFS)</strong> is a critical endpoint in oncology trials. It measures the time from randomization until objective tumor progression or death from any cause.</p>
+            
+            <h3>The Two Outcomes:</h3>
+            <ul>
+                <li><span class="highlight">Event:</span> The patient experiences disease progression (via imaging/scans) or dies.</li>
+                <li><span class="highlight">Censoring:</span> The patient has not experienced an event by the time of data analysis, is lost to follow-up, or starts a new anti-cancer therapy. We know they were progression-free <em>up until</em> their last scan.</li>
+            </ul>
+            <p>PFS is often preferred over Overall Survival (OS) because it requires fewer patients and less time to reach statistical significance, and is not confounded by subsequent therapies.</p>
+        </div>
+
+        <!-- Slide 3: PFS Table -->
+        <div class="slide">
+            <h2>PFS Example Table</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Drug A (N=100)</th>
+                            <th>Control (N=100)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Events, n (%)</strong></td>
+                            <td>40 (40%)</td>
+                            <td>65 (65%)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Censored, n (%)</strong></td>
+                            <td>60 (60%)</td>
+                            <td>35 (35%)</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="background:#f8fafc; font-size:11px;"><em>Reasons for Censoring</em></td>
+                        </tr>
+                        <tr>
+                            <td class="indent">Clinical Cutoff</td>
+                            <td>45</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td class="indent">Toxicity / Withdrawn</td>
+                            <td>10</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td class="indent">Lost to Follow-up</td>
+                            <td>5</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Median Follow-up (mo)</strong></td>
+                            <td>14.2</td>
+                            <td>14.0</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PFS Quartiles (mo)</strong></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="indent">25th Percentile</td>
+                            <td>6.5</td>
+                            <td>3.2</td>
+                        </tr>
+                        <tr>
+                            <td class="indent">Median (50th)</td>
+                            <td>18.4</td>
+                            <td>8.6</td>
+                        </tr>
+                        <tr>
+                            <td class="indent">75th Percentile</td>
+                            <td>NR</td>
+                            <td>14.1</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Landmark Estimates</strong></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="indent">6-month rate</td>
+                            <td>82%</td>
+                            <td>55%</td>
+                        </tr>
+                        <tr>
+                            <td class="indent">12-month rate</td>
+                            <td>65%</td>
+                            <td>30%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 4: Interpretation -->
+        <div class="slide">
+            <h2>Table Interpretation</h2>
+            <p>Reading a Time-to-Event table requires understanding specific statistical notations.</p>
+            <ul>
+                <li><strong>"+" (Plus Sign):</strong> Often seen next to max times (e.g., 24.5+). It indicates a censored observation. The patient was progression-free at 24.5 months, but their ultimate outcome is unknown.</li>
+                <li><strong>NR (Not Reached):</strong> The Kaplan-Meier curve has not dropped below the relevant threshold (e.g., 50% for median). The data is too immature to calculate it.</li>
+            </ul>
+            
+            <div class="warning">
+                <strong>The Two Denominators Trap:</strong><br>
+                When calculating percentages for <em>Reasons for Censoring</em>, what is the denominator? Is it the Total N (100) or the Total Censored (60)? Always check the footnotes. Regulatory bodies often prefer Total N to see the whole trial context.
+            </div>
+        </div>
+
+        <!-- Slide 5: Data Structure -->
+        <div class="slide">
+            <h2>Data Structure (CDISC)</h2>
+            <p>To generate these statistics, programmers map clinical data into standardized datasets.</p>
+            
+            <h3>ADSL (Subject Level)</h3>
+            <p>Contains one record per patient. Crucial variables include Treatment Arm (TRT01P) and Population flags (FASFL, SAFFL) which define the denominators.</p>
+
+            <h3>ADEFFTTE (Time-to-Event)</h3>
+            <p>Contains multiple endpoints per patient. For PFS:</p>
+            <ul>
+                <li><code>PARAMCD</code> = 'PFS'</li>
+                <li><code>AVAL</code> = Analysis Value (Time in months/days)</li>
+                <li><code>CNSR</code> = Censor flag (0 = Event, 1 = Censored)</li>
+                <li><code>EVNTDESC</code> = Description of what happened (Progression, Death, Clinical Cutoff)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6: Research Questions -->
+        <div class="slide">
+            <h2>Master's-Level Research</h2>
+            <p>Beyond basic tables, researchers investigate complex questions using PFS data:</p>
+            
+            <ol>
+                <li><strong>Comparative Efficacy in Subgroups:</strong> Does the PFS benefit hold true across specific biomarker subgroups (e.g., PD-L1 positive vs negative)? Requires Cox Proportional Hazards modeling with interaction terms.</li>
+                <li><strong>Early PFS as a Surrogate:</strong> Can 6-month landmark PFS accurately predict Overall Survival (OS) at 24 months? This speeds up future trial designs.</li>
+                <li><strong>Impact of Censoring Patterns:</strong> Does informative censoring (e.g., patients dropping out specifically due to drug toxicity before progression) bias the Kaplan-Meier estimates?</li>
+            </ol>
+        </div>
+
+        <!-- Slide 7: Stat Methods -->
+        <div class="slide">
+            <h2>Statistical Methods</h2>
+            
+            <h3>Standard Kaplan-Meier</h3>
+            <p>Used to estimate the PFS quartiles (25th, Median, 75th) and landmark rates. It handles varying follow-up times and censoring.</p>
+            <ul>
+                <li>Event = 1 (Progression/Death)</li>
+                <li>Censored = 0 (No event)</li>
+            </ul>
+
+            <h3>Reverse Kaplan-Meier</h3>
+            <p>Used specifically to calculate <strong>Median Follow-up</strong> maturity. It tells us how long patients have been observed.</p>
+            <ul>
+                <li>We mathematically "flip" the status indicator.</li>
+                <li>Censored (no event) becomes the "Event" (1).</li>
+                <li>Actual Events (Progression/Death) become "Censored" (0).</li>
+            </ul>
+        </div>
+
+        <!-- Slide 8: Code -->
+        <div class="slide">
+            <h2>Programming Code</h2>
+            <p>How statisticians generate the numbers.</p>
+            
+            <h3>SAS (PROC LIFETEST)</h3>
+<pre><code><span class="keyword">proc lifetest</span> data=adefftte plots=survival;
+  <span class="keyword">time</span> aval * cnsr(<span class="string">1</span>); <span class="comment">/* 1 is censored */</span>
+  <span class="keyword">strata</span> trt01p;
+  <span class="keyword">where</span> paramcd=<span class="string">'PFS'</span>;
+<span class="keyword">run</span>;</code></pre>
+
+            <h3>R (survival package)</h3>
+<pre><code><span class="keyword">library</span>(survival)
+<span class="comment"># cnsr: 0=Event, 1=Censored. 
+# Surv() expects Event=1, Censor=0</span>
+status &lt;- <span class="keyword">ifelse</span>(adefftte$cnsr == <span class="string">0</span>, <span class="string">1</span>, <span class="string">0</span>)
+
+km_fit &lt;- <span class="keyword">survfit</span>(
+  <span class="keyword">Surv</span>(aval, status) ~ trt01p, 
+  data = adefftte
+)
+<span class="keyword">print</span>(km_fit)</code></pre>
+        </div>
+
+        <!-- Slide 9: QC & RA Checklist -->
+        <div class="slide">
+            <h2>QC & RA Submission Checklist</h2>
+            <p>Before submitting to the FDA or EMA, ensure the following are validated:</p>
+            
+            <ul>
+                <li><strong>Denominator Check:</strong> Do the N's in the table header exactly match the Intent-to-Treat (ITT) or Full Analysis Set (FAS) population in ADSL?</li>
+                <li><strong>Censoring Hierarchy:</strong> Did you apply the correct FDA/EMA censoring rules? (e.g., If a patient misses two consecutive scans and then progresses, they are usually censored at the last adequate scan).</li>
+                <li><strong>Date Imputation:</strong> Are partial dates for death or scans imputed according to the Statistical Analysis Plan (SAP)?</li>
+                <li><strong>Proportional Hazards:</strong> Have you tested the assumption? If curves cross, the Hazard Ratio (HR) might be invalid.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 10: Donation -->
+        <div class="slide title-slide">
+            <h2>Thank You!</h2>
+            <p>I hope this guide helped clarify the clinical, statistical, and programming aspects of Progression-Free Survival.</p>
+            <p style="margin-top: 20px; color: #6b7280;">If you found this valuable, consider supporting the creator:</p>
+            
+            <a href="https://buymeacoffee.com/ohchenwei" target="_blank" class="donation-link">
+                ☕ Buy Me a Coffee
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="controls">
+        <button id="prevBtn" class="btn-nav" disabled>← Back</button>
+        <button id="playBtn" class="btn-play">Play ▶</button>
+        <button id="nextBtn" class="btn-nav">Next →</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const playBtn = document.getElementById('playBtn');
+        const progressBar = document.getElementById('progressBar');
+        const counter = document.getElementById('counter');
+        const slidesWrapper = document.getElementById('slidesWrapper');
+        
+        let currentSlide = 0;
+        let isPlaying = false;
+        let slideInterval;
+        const delay = 10000; // 10 seconds
+
+        function updateDeck() {
+            // Update slides
+            slides.forEach((slide, index) => {
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                    slide.scrollTop = 0; // Reset scroll on new slide
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            // Update UI
+            counter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            progressBar.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+            
+            // Button states
+            prevBtn.disabled = currentSlide === 0;
+            
+            if (currentSlide === totalSlides - 1) {
+                nextBtn.disabled = true;
+                if (isPlaying) togglePlay(); // Auto-stop at end
+            } else {
+                nextBtn.disabled = false;
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateDeck();
+            } else if (isPlaying) {
+                togglePlay(); // Stop if playing and at the end
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateDeck();
+            }
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                playBtn.textContent = 'Pause ⏸';
+                playBtn.classList.add('playing');
+                // Immediately go to next if at end and user hits play again
+                if (currentSlide === totalSlides - 1) {
+                    currentSlide = 0;
+                    updateDeck();
+                }
+                slideInterval = setInterval(nextSlide, delay);
+            } else {
+                playBtn.textContent = 'Play ▶';
+                playBtn.classList.remove('playing');
+                clearInterval(slideInterval);
+            }
+        }
+
+        function pauseOnManual() {
+            if (isPlaying) togglePlay();
+        }
+
+        // Event Listeners for Buttons
+        prevBtn.addEventListener('click', () => {
+            pauseOnManual();
+            prevSlide();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            pauseOnManual();
+            nextSlide();
+        });
+
+        playBtn.addEventListener('click', togglePlay);
+
+        // Keyboard Support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                pauseOnManual();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                pauseOnManual();
+                prevSlide();
+            } else if (e.key === ' ' || e.key === 'Spacebar') {
+                e.preventDefault(); // Prevent page scroll
+                togglePlay();
+            }
+        });
+
+        // Touch / Swipe Support
+        let startX = 0;
+        let startY = 0;
+
+        slidesWrapper.addEventListener('touchstart', (e) => {
+            startX = e.changedTouches[0].screenX;
+            startY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        slidesWrapper.addEventListener('touchend', (e) => {
+            const endX = e.changedTouches[0].screenX;
+            const endY = e.changedTouches[0].screenY;
+            
+            const diffX = startX - endX;
+            const diffY = startY - endY;
+
+            // Check if horizontal swipe is more significant than vertical scroll
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                // Threshold of 50px
+                if (diffX > 50) {
+                    // Swiped left -> Next
+                    pauseOnManual();
+                    nextSlide();
+                } else if (diffX < -50) {
+                    // Swiped right -> Prev
+                    pauseOnManual();
+                    prevSlide();
+                }
+            }
+        }, { passive: true });
+
+        // Initialize
+        updateDeck();
+    });
+</script>
+
+</body>
+</html>
