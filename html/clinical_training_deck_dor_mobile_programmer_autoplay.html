@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Programming the DOR Table</title>
+<script type="text/javascript" src="/ruxitagentjs_ICANVfqru_10333260303165926.js" data-dtconfig="rid=RID_2065267960|rpid=244299234|domain=abbvienet.com|reportUrl=/rb_16a183f6-c871-4082-850b-a1f7a2ecd0b1|app=ea7c4b59f27d43eb|cuc=oao3vfhf|owasp=1|mel=100000|featureHash=ICANVfqru|dpvc=1|lastModification=1777844919940|tp=500,50,0|rdnt=1|uxrgce=1|srbbv=2|agentUri=/ruxitagentjs_ICANVfqru_10333260303165926.js"></script><style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        background-color: #1a1a24;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        overflow: hidden;
+    }
+
+    .mobile-frame {
+        width: 100%;
+        max-width: 414px;
+        height: 100vh;
+        max-height: 896px;
+        background-color: #ffffff;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    @media (min-width: 415px) {
+        .mobile-frame {
+            height: 90vh;
+            border-radius: 16px;
+        }
+    }
+
+    /* Top Bar */
+    .top-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 10px 20px 0;
+        background: linear-gradient(to bottom, rgba(255,255,255,1) 70%, rgba(255,255,255,0));
+    }
+
+    .progress-container {
+        width: 100%;
+        height: 4px;
+        background-color: #e5e5ea;
+        border-radius: 2px;
+        overflow: hidden;
+        margin-bottom: 6px;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background-color: #007aff;
+        width: 0%;
+        transition: width 0.4s ease;
+    }
+
+    .counter {
+        font-size: 11px;
+        color: #8e8e93;
+        text-align: right;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    /* Slider Area */
+    .slider {
+        flex: 1;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 65px 24px 80px;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        background-color: #ffffff;
+    }
+
+    .slide.active {
+        opacity: 1;
+        transform: translateX(0);
+        z-index: 2;
+    }
+
+    .slide.prev {
+        transform: translateX(-100%);
+        z-index: 1;
+    }
+
+    /* Typography & Content */
+    .slide-center {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 32px;
+        color: #1c1c1e;
+        margin-bottom: 12px;
+        line-height: 1.2;
+        font-weight: 800;
+    }
+
+    h2 {
+        font-size: 24px;
+        color: #007aff;
+        margin-bottom: 20px;
+        line-height: 1.3;
+        font-weight: 700;
+        border-bottom: 2px solid #f2f2f7;
+        padding-bottom: 8px;
+    }
+
+    .subtitle {
+        font-size: 18px;
+        color: #8e8e93;
+        font-weight: 500;
+    }
+
+    p {
+        font-size: 16px;
+        color: #3a3a3c;
+        line-height: 1.6;
+        margin-bottom: 16px;
+    }
+
+    ul {
+        padding-left: 20px;
+        margin-bottom: 16px;
+    }
+
+    li {
+        font-size: 16px;
+        color: #3a3a3c;
+        line-height: 1.5;
+        margin-bottom: 10px;
+    }
+
+    .highlight {
+        background-color: #e5f0ff;
+        color: #0056b3;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 0.95em;
+    }
+
+    .alert {
+        background-color: #fff2f2;
+        border-left: 4px solid #ff3b30;
+        padding: 12px;
+        border-radius: 0 8px 8px 0;
+        margin-bottom: 16px;
+    }
+
+    .alert p {
+        margin-bottom: 0;
+        color: #c93429;
+        font-size: 15px;
+    }
+
+    /* Code Blocks */
+    .code-wrapper {
+        background-color: #282c34;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    .code-header {
+        background-color: #21252b;
+        padding: 6px 12px;
+        font-size: 11px;
+        color: #9da5b4;
+        font-family: monospace;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .code-block {
+        padding: 16px;
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 13px;
+        line-height: 1.5;
+        overflow-x: auto;
+        white-space: pre;
+        color: #abb2bf;
+    }
+
+    .c-kw { color: #c678dd; } /* Keyword */
+    .c-fn { color: #61afef; } /* Function/Procedure */
+    .c-dt { color: #e06c75; } /* Dataset/Var */
+    .c-st { color: #98c379; } /* String */
+    .c-cm { color: #5c6370; font-style: italic; } /* Comment */
+    .c-nm { color: #d19a66; } /* Number */
+
+    /* Bottom Control Bar */
+    .bottom-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 70px;
+        background-color: rgba(250, 250, 250, 0.95);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid #e5e5ea;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        z-index: 10;
+    }
+
+    .btn {
+        background: none;
+        border: none;
+        font-size: 15px;
+        font-weight: 600;
+        color: #007aff;
+        cursor: pointer;
+        padding: 10px 15px;
+        border-radius: 20px;
+        transition: background-color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .btn:active {
+        background-color: #e5e5ea;
+    }
+
+    .btn-play {
+        background-color: #007aff;
+        color: white;
+        padding: 10px 20px;
+        box-shadow: 0 2px 10px rgba(0, 122, 255, 0.3);
+    }
+
+    .btn-play:active {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+
+<div id="app" class="mobile-frame">
+    <!-- Progress & Counter -->
+    <div class="top-bar">
+        <div class="progress-container">
+            <div id="progress" class="progress-fill"></div>
+        </div>
+        <div id="counter" class="counter">1 / 10</div>
+    </div>
+
+    <!-- Slides Container -->
+    <div id="slider" class="slider">
+
+        <!-- Slide 1 -->
+        <div class="slide slide-center">
+            <h1>Programming the DOR Table</h1>
+            <p class="subtitle">A Guide for Clinical SAS Programmers</p>
+            <div style="margin-top: 40px; font-size: 40px;">📊</div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <h2>What is DOR?</h2>
+            <p><strong>Duration of Response (DOR)</strong> is a critical efficacy endpoint in oncology trials.</p>
+            <p>It measures the time from the <em>first documented response</em> (Complete Response [CR] or Partial Response [PR]) until:</p>
+            <ul>
+                <li>Disease Progression (PD)</li>
+                <li>Death from any cause</li>
+            </ul>
+            <p>Unlike Progression-Free Survival (PFS), DOR is calculated <strong>only</strong> for the subset of patients who actually responded to the treatment (e.g., Investigational Drug A).</p>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <h2>Key Terminology</h2>
+            <ul>
+                <li><span class="highlight">Event:</span> The patient experienced progression or death. (CNSR = 0)</li>
+                <li><span class="highlight">Censored:</span> The patient has not progressed/died by their last assessment. (CNSR = 1)</li>
+                <li><span class="highlight">+ (Plus Sign):</span> Used in tables to denote a censored observation (e.g., a DOR of <code style="background:#eee;padding:2px 4px;border-radius:3px;">12.5+</code> months).</li>
+                <li><span class="highlight">NR (Not Reached):</span> Occurs when the Kaplan-Meier curve does not drop below 50%. The median DOR cannot be estimated yet.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <h2>The 3 Denominators Trap</h2>
+            <div class="alert">
+                <p><strong>Warning:</strong> The most common QC finding in DOR tables is using the wrong denominator.</p>
+            </div>
+            <p>You must manage three distinct N's:</p>
+            <ol>
+                <li><strong>Study/Arm N:</strong> The total Evaluable or ITT population (from ADSL). Usually shown in the column header.</li>
+                <li><strong>Responder N:</strong> The total number of responders. This is the denominator for your Kaplan-Meier analysis.</li>
+                <li><strong>Censored N:</strong> The total number of censored patients. This is the denominator when calculating percentages for "Reasons for Censoring".</li>
+            </ol>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <h2>Standard vs Reverse KM</h2>
+            <p>We run Kaplan-Meier (PROC LIFETEST) twice for a complete DOR table.</p>
+            <p><strong>1. Standard KM:</strong></p>
+            <ul>
+                <li>Estimates the time to Event (Progression/Death).</li>
+                <li>Yields Median DOR, 95% CI, and landmark event-free rates.</li>
+            </ul>
+            <p><strong>2. Reverse KM:</strong></p>
+            <ul>
+                <li>Estimates the Median Follow-Up time for the responder cohort.</li>
+                <li>We artificially <em>swap</em> the Event and Censor flags. Progressions become censored; active follow-ups become events.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <h2>SAS Logic: CDISC Setup</h2>
+            <p>First, identify responders from ADRS (Tumor Response) for Investigational Drug A.</p>
+            
+            <div class="code-wrapper">
+                <div class="code-header">SAS Data Step</div>
+                <div class="code-block"><span class="c-cm">/* 1. Find Responders (CR or PR) */</span>
+<span class="c-kw">data</span> <span class="c-dt">responders</span>;
+  <span class="c-kw">set</span> <span class="c-dt">adrs</span>;
+  <span class="c-kw">where</span> paramcd=<span class="c-st">'OVRSG'</span> 
+    <span class="c-kw">and</span> avalc <span class="c-kw">in</span> (<span class="c-st">'CR'</span>, <span class="c-st">'PR'</span>)
+    <span class="c-kw">and</span> trta = <span class="c-st">'Drug A'</span>;
+  <span class="c-kw">keep</span> usubjid;
+<span class="c-kw">run</span>;
+
+<span class="c-cm">/* 2. Subset ADTTE (Time to Event) */</span>
+<span class="c-kw">data</span> <span class="c-dt">dor_tte</span>;
+  <span class="c-kw">merge</span> <span class="c-dt">responders</span>(in=a) 
+        <span class="c-dt">adtte</span>(where=(paramcd=<span class="c-st">'DOR'</span>));
+  <span class="c-kw">by</span> usubjid;
+  <span class="c-kw">if</span> a; <span class="c-cm">/* Keep ONLY responders */</span>
+<span class="c-kw">run</span>;</div>
+            </div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide">
+            <h2>SAS Logic: Appending '+'</h2>
+            <p>When reporting the Min and Max DOR, you must append a '+' if that specific observation was censored.</p>
+
+            <div class="code-wrapper">
+                <div class="code-header">SAS Data Step</div>
+                <div class="code-block"><span class="c-cm">/* Sort to find Min/Max */</span>
+<span class="c-kw">proc sort</span> <span class="c-dt">data</span>=<span class="c-dt">dor_tte</span>;
+  <span class="c-kw">by</span> trta aval;
+<span class="c-kw">run</span>;
+
+<span class="c-cm">/* Format value as character */</span>
+<span class="c-kw">data</span> <span class="c-dt">dor_fmt</span>;
+  <span class="c-kw">set</span> <span class="c-dt">dor_tte</span>;
+  
+  <span class="c-kw">if</span> cnsr = <span class="c-nm">1</span> <span class="c-kw">then</span> 
+    aval_c = <span class="c-fn">strip</span>(<span class="c-fn">put</span>(aval, <span class="c-nm">8.1</span>)) || <span class="c-st">'+'</span>;
+  <span class="c-kw">else</span> 
+    aval_c = <span class="c-fn">strip</span>(<span class="c-fn">put</span>(aval, <span class="c-nm">8.1</span>));
+<span class="c-kw">run</span>;</div>
+            </div>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide">
+            <h2>SAS Logic: Reverse KM</h2>
+            <p>To calculate Median Follow-up for Responders, flip the censoring variable.</p>
+
+            <div class="code-wrapper">
+                <div class="code-header">SAS Proc Lifetest</div>
+                <div class="code-block"><span class="c-cm">/* Flip the Censor Flag */</span>
+<span class="c-kw">data</span> <span class="c-dt">rev_km</span>;
+  <span class="c-kw">set</span> <span class="c-dt">dor_tte</span>;
+  rev_cnsr = <span class="c-nm">1</span> - cnsr; 
+  <span class="c-cm">/* 0 becomes 1, 1 becomes 0 */</span>
+<span class="c-kw">run</span>;
+
+<span class="c-cm">/* Run Lifetest for Follow-up */</span>
+<span class="c-kw">proc lifetest</span> <span class="c-dt">data</span>=<span class="c-dt">rev_km</span>;
+  <span class="c-kw">time</span> aval * rev_cnsr(<span class="c-nm">1</span>);
+  <span class="c-kw">strata</span> trta;
+  <span class="c-kw">ods output</span> Quartiles=<span class="c-dt">fup_med</span>;
+<span class="c-kw">run</span>;</div>
+            </div>
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="slide">
+            <h2>SAS Logic: Landmarks</h2>
+            <p>Tables often ask for the probability of remaining in response at specific timepoints (e.g., 6 and 12 months).</p>
+
+            <div class="code-wrapper">
+                <div class="code-header">SAS Proc Lifetest</div>
+                <div class="code-block"><span class="c-cm">/* Standard KM with Timelist */</span>
+<span class="c-kw">proc lifetest</span> <span class="c-dt">data</span>=<span class="c-dt">dor_tte</span> 
+              <span class="c-kw">timelist</span>=<span class="c-nm">6</span> <span class="c-nm">12</span> <span class="c-kw">reduceout</span>;
+  <span class="c-kw">time</span> aval * cnsr(<span class="c-nm">1</span>);
+  <span class="c-kw">strata</span> trta;
+  <span class="c-kw">ods output</span> ProductLimitEstimates=<span class="c-dt">ple</span>;
+<span class="c-kw">run</span>;
+
+<span class="c-cm">/* 'ple' dataset contains Survival 
+   estimates at exactly 6 and 12 */</span></div>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide">
+            <h2>QC Checklist ✅</h2>
+            <ul>
+                <li><strong>Population:</strong> Are non-responders strictly excluded from the Lifetest?</li>
+                <li><strong>Denominators:</strong> Does the N for "Reasons for Censoring" equal the total number of censored responders?</li>
+                <li><strong>Min/Max:</strong> Are the '+' signs accurately reflecting the <span class="highlight">cnsr</span> flag of the specific min and max records?</li>
+                <li><strong>Follow-up:</strong> Did you remember to use the Reverse KM method (flipping the censor flag) for the follow-up median?</li>
+                <li><strong>NR formatting:</strong> Is a missing median properly formatted as "NR" or "NE" as per the SAP?</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- Controls -->
+    <div class="bottom-bar">
+        <button id="btn-prev" class="btn">
+            <span style="font-size: 18px;">&#8592;</span> Prev
+        </button>
+        <button id="btn-play" class="btn btn-play">
+            Pause
+        </button>
+        <button id="btn-next" class="btn">
+            Next <span style="font-size: 18px;">&#8594;</span>
+        </button>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelectorAll('.slide');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const btnPlay = document.getElementById('btn-play');
+    const progressBar = document.getElementById('progress');
+    const counter = document.getElementById('counter');
+    const slider = document.getElementById('slider');
+
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+    let isPlaying = true;
+    let autoplayTimer;
+    const slideDuration = 8000; // 8 seconds per slide
+
+    function updateUI() {
+        // Update Slides Classes
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active', 'prev');
+            if (index === currentSlide) {
+                slide.classList.add('active');
+                slide.scrollTop = 0; // Reset scroll on new slide
+            } else if (index < currentSlide) {
+                slide.classList.add('prev');
+            }
+        });
+
+        // Update Top Bar
+        counter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+        progressBar.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+        
+        // Update Play Button
+        btnPlay.innerHTML = isPlaying ? '&#10074;&#10074; Pause' : '&#9658; Play';
+    }
+
+    function goToNext() {
+        if (currentSlide < totalSlides - 1) {
+            currentSlide++;
+        } else {
+            currentSlide = 0; // Loop to beginning
+        }
+        updateUI();
+        resetAutoplay();
+    }
+
+    function goToPrev() {
+        if (currentSlide > 0) {
+            currentSlide--;
+        } else {
+            currentSlide = totalSlides - 1; // Loop to end
+        }
+        updateUI();
+        resetAutoplay();
+    }
+
+    function togglePlay() {
+        isPlaying = !isPlaying;
+        if (isPlaying) {
+            startAutoplay();
+        } else {
+            stopAutoplay();
+        }
+        updateUI();
+    }
+
+    function startAutoplay() {
+        stopAutoplay();
+        autoplayTimer = setInterval(goToNext, slideDuration);
+    }
+
+    function stopAutoplay() {
+        clearInterval(autoplayTimer);
+    }
+
+    function resetAutoplay() {
+        if (isPlaying) {
+            startAutoplay();
+        }
+    }
+
+    // Button Listeners
+    btnNext.addEventListener('click', goToNext);
+    btnPrev.addEventListener('click', goToPrev);
+    btnPlay.addEventListener('click', togglePlay);
+
+    // Touch / Swipe Support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    slider.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    slider.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, {passive: true});
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        if (touchEndX < touchStartX - swipeThreshold) {
+            goToNext(); // Swiped left
+        }
+        if (touchEndX > touchStartX + swipeThreshold) {
+            goToPrev(); // Swiped right
+        }
+    }
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') goToNext();
+        if (e.key === 'ArrowLeft') goToPrev();
+        if (e.key === ' ') {
+            e.preventDefault();
+            togglePlay();
+        }
+    });
+
+    // Initialize
+    updateUI();
+    startAutoplay();
+});
+</script>
+</body>
+</html>
