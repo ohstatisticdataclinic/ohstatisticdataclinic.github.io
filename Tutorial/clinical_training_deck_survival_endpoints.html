@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Clinical & Statistical Guide for Researchers</title>
+    <script type="text/javascript" src="/ruxitagentjs_ICANVfqru_10333260303165926.js" data-dtconfig="rid=RID_592176942|rpid=-817546469|domain=abbvienet.com|reportUrl=/rb_16a183f6-c871-4082-850b-a1f7a2ecd0b1|app=ea7c4b59f27d43eb|cuc=oao3vfhf|owasp=1|mel=100000|featureHash=ICANVfqru|dpvc=1|lastModification=1777844919940|tp=500,50,0|rdnt=1|uxrgce=1|srbbv=2|agentUri=/ruxitagentjs_ICANVfqru_10333260303165926.js"></script><style>
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            font-size: 16px;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Main Container */
+        #deck-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 900px;
+            min-height: 600px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Progress Bar */
+        #progress-container {
+            width: 100%;
+            height: 5px;
+            background-color: #e5e7eb;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 20;
+        }
+
+        #progress-bar {
+            height: 100%;
+            background-color: #2563eb;
+            width: 0%;
+            transition: width 0.4s ease-in-out;
+        }
+
+        /* Slide Counter */
+        #slide-counter {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 0.875rem;
+            color: #6b7280;
+            z-index: 20;
+            font-weight: 500;
+        }
+
+        /* Slides Wrapper */
+        #slides-wrapper {
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Individual Slides */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 50px 40px 80px 40px; /* Bottom padding for controls */
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none;
+            overflow-y: auto;
+            visibility: hidden;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.25rem;
+            color: #111827;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            color: #374151;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .highlight {
+            font-weight: 600;
+            color: #2563eb;
+        }
+
+        /* Tables */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        th {
+            border-bottom: 2px solid #cbd5e1;
+            padding: 12px 15px;
+            text-align: left;
+            background-color: #f8fafc;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: #1e1e1e;
+            color: #d4d4d8;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.9rem;
+        }
+
+        code {
+            font-family: inherit;
+        }
+
+        /* Callout Boxes */
+        .callout {
+            background-color: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 6px 6px 0;
+        }
+
+        /* Bottom Controls */
+        #controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e5e7eb;
+            z-index: 20;
+        }
+
+        button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-nav {
+            background-color: #f1f5f9;
+            color: #1f2937;
+        }
+
+        .btn-nav:hover {
+            background-color: #e2e8f0;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-play {
+            background-color: #2563eb;
+            color: #ffffff;
+            min-width: 90px;
+        }
+
+        .btn-play:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Title Slide Specifics */
+        .title-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+            padding: 40px;
+        }
+
+        .title-slide h1 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
+
+        .instruction {
+            font-size: 0.9rem;
+            color: #6b7280;
+            background: #f3f4f6;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .bio {
+            text-align: left;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="deck-container">
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+        <div id="slide-counter">Slide 1 / 10</div>
+
+        <div id="slides-wrapper">
+            
+            <!-- Slide 1: Title Slide -->
+            <div class="slide active title-slide">
+                <h1>A Clinical & Statistical Guide for Researchers</h1>
+                <div class="subtitle">Understanding Tables, Data, and Statistics</div>
+                <div class="instruction">Press <strong>Play</strong> or use <strong>arrow keys</strong> to begin</div>
+                
+                <div class="bio">
+                    <p><strong>Presenter:</strong> Chen Wei</p>
+                    <p>I am a pharmacist currently involved in drug development as a statistical programmer. I operate a Data Clinic for medical doctors, helping them achieve success in publication.</p>
+                    <p>Website: <a href="https://ohstatisticdataclinic.github.io/" target="_blank">ohstatisticdataclinic.github.io</a></p>
+                </div>
+            </div>
+
+            <!-- Slide 2: Background -->
+            <div class="slide">
+                <h2>Background: Clinical Endpoints</h2>
+                <p>Understanding the distinction between time-to-event and response endpoints is crucial for correct analysis.</p>
+                
+                <ul>
+                    <li><strong>OS (Overall Survival):</strong> Time from randomization to death from any cause.</li>
+                    <li><strong>PFS (Progression-Free Survival):</strong> Time from randomization to disease progression or death.</li>
+                    <li><strong>DOCR (Duration of Complete Response):</strong> Time from first documented CR to disease progression or death.</li>
+                    <li><strong>DOR (Duration of Response):</strong> Time from first documented response (CR or PR) to disease progression or death.</li>
+                </ul>
+
+                <div class="callout">
+                    <strong>Crucial Population Difference:</strong><br>
+                    OS and PFS analyses utilize the <strong>Full Analysis Set (FAS)</strong>—meaning all randomized patients.<br>
+                    DOR and DOCR analyses use <strong>ONLY Responders</strong> (CR+PR or CR only) as the denominator.
+                </div>
+            </div>
+
+            <!-- Slide 3: Table Example -->
+            <div class="slide">
+                <h2>Standard Efficacy Table Example</h2>
+                <p>A typical summary of time-to-event endpoints (e.g., PFS) comparing two arms.</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Generic Drug A (N=150)</th>
+                            <th>Control (N=150)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Number of Events, n (%)</td>
+                            <td>85 (56.7%)</td>
+                            <td>110 (73.3%)</td>
+                        </tr>
+                        <tr>
+                            <td>Number of Censored, n (%)</td>
+                            <td>65 (43.3%)</td>
+                            <td>40 (26.7%)</td>
+                        </tr>
+                        <tr>
+                            <td>Min / Max (Months)</td>
+                            <td>1.5 / 42.8+</td>
+                            <td>0.9 / 36.5+</td>
+                        </tr>
+                        <tr>
+                            <td>Median Follow-Up (Reverse KM)</td>
+                            <td>24.5 months</td>
+                            <td>22.1 months</td>
+                        </tr>
+                        <tr>
+                            <td>Median PFS (Standard KM)</td>
+                            <td>14.2 months</td>
+                            <td>8.6 months</td>
+                        </tr>
+                        <tr>
+                            <td>12-month Landmark Rate</td>
+                            <td>62.4%</td>
+                            <td>41.2%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Slide 4: Interpreting Data -->
+            <div class="slide">
+                <h2>Interpreting the Data</h2>
+                
+                <h3>The '+' Symbol</h3>
+                <p>In Min/Max ranges (e.g., 42.8+), the '+' indicates the observation is <strong>censored</strong>. This means at the last follow-up, the patient had not experienced the event (still alive/responding without progression).</p>
+
+                <h3>'NR' (Not Reached)</h3>
+                <p>Often seen in Median survival outputs. It means the Kaplan-Meier curve has not yet dropped below 50%. The data is not mature enough to calculate a median.</p>
+
+                <div class="callout">
+                    <h3>⚠️ The "Two Denominators Trap"</h3>
+                    <p>When reporting Event rates, the denominator is the Total Population (or Total Responders for DOR). However, when summarizing the <em>'Reasons for Censoring'</em>, the denominator must be the <strong>Total Censored</strong> patients, not the total population.</p>
+                </div>
+            </div>
+
+            <!-- Slide 5: Data Structure -->
+            <div class="slide">
+                <h2>Data Structure & CDISC Setup</h2>
+                
+                <h3>Essential Dates to Collect:</h3>
+                <ul>
+                    <li>Scan dates (Imaging)</li>
+                    <li>Progression dates (Investigator assessed)</li>
+                    <li>Death dates</li>
+                    <li>New anti-cancer therapy start dates</li>
+                </ul>
+
+                <h3>Standard CDISC Datasets:</h3>
+                <ul>
+                    <li><span class="highlight">ADSL:</span> Subject-Level Analysis Dataset. Contains demographics, treatment groups, and population flags (e.g., FASFL).</li>
+                    <li><span class="highlight">ADEFFTTE:</span> Efficacy Time-to-Event Dataset. Contains the analysis value (<code>AVAL</code>) in months/days, and the censoring variable (<code>CNSR</code>) where 0 = Event and 1 = Censored.</li>
+                    <li><span class="highlight">ADRS:</span> Response Dataset. Used to derive best overall response (BOR) and filter responders for DOR analysis.</li>
+                </ul>
+            </div>
+
+            <!-- Slide 6: Research Questions -->
+            <div class="slide">
+                <h2>Inspiring Research Questions</h2>
+                <p>For MDs pursuing Master's or publishing papers, defining a sharp statistical question is step one.</p>
+
+                <ol>
+                    <li>
+                        <strong>Comparative Efficacy:</strong><br>
+                        <em>Does Generic Drug A significantly improve PFS compared to the Standard Control in the first-line setting?</em>
+                    </li>
+                    <br>
+                    <li>
+                        <strong>Landmark Analysis:</strong><br>
+                        <em>What is the 12-month Overall Survival (OS) rate specifically within high-risk subgroups (e.g., patients with liver metastases)?</em>
+                    </li>
+                    <br>
+                    <li>
+                        <strong>Surrogacy / Predictive Modeling:</strong><br>
+                        <em>Does achieving an early Duration of Response (DOR) > 6 months predict long-term Overall Survival (OS)?</em>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Slide 7: Statistical Methods -->
+            <div class="slide">
+                <h2>Statistical Methods: KM vs Reverse KM</h2>
+                
+                <h3>Standard Kaplan-Meier (KM)</h3>
+                <p>Used to estimate actual survival or progression time.</p>
+                <ul>
+                    <li>Estimates time to the event of interest.</li>
+                    <li><strong>Coding:</strong> Event = 0, Censored = 1 (Standard CDISC mapping).</li>
+                </ul>
+
+                <h3>Reverse Kaplan-Meier</h3>
+                <p>Used to estimate <strong>Median Follow-Up</strong> time, indicating the maturity of the clinical trial data.</p>
+                <ul>
+                    <li>Estimates the time patients are observed before dropping out or cutting off data.</li>
+                    <li><strong>Coding:</strong> The censoring indicator is <em>flipped</em>. Actual events become censored (1), and actual censored patients become events (0).</li>
+                </ul>
+            </div>
+
+            <!-- Slide 8: Code Snippets -->
+            <div class="slide">
+                <h2>Programming Code Snippets</h2>
+                <p>How to generate standard Kaplan-Meier estimates across different software.</p>
+
+                <h3>SAS</h3>
+<pre><code>proc lifetest data=adefftte time=aval*cnsr(1);
+    strata grp;
+run;</code></pre>
+
+                <h3>R</h3>
+<pre><code>library(survival)
+fit <- survfit(Surv(aval, event) ~ grp, data=data)
+print(fit)</code></pre>
+
+                <h3>SPSS (Syntax)</h3>
+<pre><code>KM aval BY grp
+  /STATUS=event(1)
+  /PRINT MEAN.</code></pre>
+            </div>
+
+            <!-- Slide 9: QC & Regulatory -->
+            <div class="slide">
+                <h2>QC & Regulatory (RA) Submission Checklist</h2>
+                <p>Before submitting tables for publication or regulatory review, ensure the following:</p>
+
+                <ul>
+                    <li>✅ <strong>Denominators Match:</strong> Verify that the N counts in efficacy tables perfectly match the population flags in the ADSL dataset.</li>
+                    <li>✅ <strong>Censoring Hierarchies:</strong> Confirm that the rules for censoring (e.g., missing 2+ scans, starting new therapy) align strictly with FDA/EMA guidelines.</li>
+                    <li>✅ <strong>Missing Data:</strong> Check the handling of missing baseline disease assessments and post-baseline scans.</li>
+                    <li>✅ <strong>Formatting:</strong> Ensure proper conditional formatting for Min/Max values (the '+' symbol must accurately reflect censoring status at the maximum follow-up).</li>
+                </ul>
+            </div>
+
+            <!-- Slide 10: Thank You -->
+            <div class="slide title-slide">
+                <h1>Thank You</h1>
+                <div class="subtitle">Thank you for joining this presentation.</div>
+                
+                <p style="margin-top: 2rem; font-size: 1.1rem;">
+                    If you found this training helpful, you can support my work:
+                </p>
+                <a href="https://buymeacoffee.com/ohchenwei" target="_blank" style="display: inline-block; background: #ffdd00; color: #000; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 1rem 0 2rem 0; text-decoration: none; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    ☕ Buy me a coffee
+                </a>
+
+                <p>
+                    <strong>Data Clinic Website:</strong><br>
+                    <a href="https://ohstatisticdataclinic.github.io/" target="_blank">https://ohstatisticdataclinic.github.io/</a>
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Controls -->
+        <div id="controls">
+            <button id="btn-prev" class="btn-nav">Back</button>
+            <button id="btn-play-pause" class="btn-play">Play</button>
+            <button id="btn-next" class="btn-nav">Next</button>
+        </div>
+    </div>
+
+    <script>
+        // State Variables
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let isPlaying = false;
+        let slideInterval = null;
+        const autoplayDelay = 10000; // 10 seconds
+
+        // DOM Elements
+        const prevBtn = document.getElementById('btn-prev');
+        const nextBtn = document.getElementById('btn-next');
+        const playPauseBtn = document.getElementById('btn-play-pause');
+        const progressBar = document.getElementById('progress-bar');
+        const slideCounter = document.getElementById('slide-counter');
+        const slidesWrapper = document.getElementById('slides-wrapper');
+
+        // Initialize UI
+        function updateUI() {
+            // Update Slides
+            slides.forEach((slide, index) => {
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                    // Reset scroll position when slide becomes active
+                    slide.scrollTop = 0; 
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            // Update Counter
+            slideCounter.textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+
+            // Update Progress Bar
+            const progressPercentage = ((currentSlide + 1) / totalSlides) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+
+            // Update Buttons
+            prevBtn.disabled = currentSlide === 0;
+        }
+
+        // Navigation Functions
+        function nextSlide(manual = false) {
+            if (manual) stopAutoplay();
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateUI();
+        }
+
+        function prevSlide(manual = false) {
+            if (manual) stopAutoplay();
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateUI();
+            }
+        }
+
+        // Autoplay Functions
+        function toggleAutoplay() {
+            if (isPlaying) {
+                stopAutoplay();
+            } else {
+                startAutoplay();
+            }
+        }
+
+        function startAutoplay() {
+            isPlaying = true;
+            playPauseBtn.textContent = 'Pause';
+            playPauseBtn.style.backgroundColor = '#dc2626'; // Red for pause
+            
+            // Immediately go to next slide if at the end and pressing play
+            if(currentSlide === totalSlides - 1) {
+                nextSlide();
+            }
+
+            slideInterval = setInterval(() => {
+                nextSlide();
+            }, autoplayDelay);
+        }
+
+        function stopAutoplay() {
+            isPlaying = false;
+            playPauseBtn.textContent = 'Play';
+            playPauseBtn.style.backgroundColor = '#2563eb'; // Blue for play
+            clearInterval(slideInterval);
+        }
+
+        // Event Listeners - Buttons
+        nextBtn.addEventListener('click', () => nextSlide(true));
+        prevBtn.addEventListener('click', () => prevSlide(true));
+        playPauseBtn.addEventListener('click', toggleAutoplay);
+
+        // Event Listeners - Keyboard
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextSlide(true);
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide(true);
+            } else if (e.key === ' ' || e.key === 'Spacebar') {
+                e.preventDefault(); // Prevent page scroll
+                toggleAutoplay();
+            }
+        });
+
+        // Event Listeners - Touch (Swipe)
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        slidesWrapper.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        slidesWrapper.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const threshold = 50;
+            if (touchEndX < touchStartX - threshold) {
+                // Swipe Left -> Next
+                nextSlide(true);
+            }
+            if (touchEndX > touchStartX + threshold) {
+                // Swipe Right -> Prev
+                prevSlide(true);
+            }
+        }
+
+        // Initial setup run
+        updateUI();
+
+    </script>
+</body>
+</html>
