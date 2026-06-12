@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ISS Training Slides</title>
+<style>
+  :root{
+    --bg:#f3f4f6;
+    --card:#ffffff;
+    --text:#111827;
+    --muted:#6b7280;
+    --blue:#2563eb;
+    --blue2:#1d4ed8;
+    --line:#e5e7eb;
+    --shadow:0 20px 50px rgba(15,23,42,.10), 0 4px 14px rgba(15,23,42,.06);
+    --code:#0f172a;
+    --green:#059669;
+    --amber:#d97706;
+  }
+  *{box-sizing:border-box}
+  html,body{
+    margin:0;
+    height:100%;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    overflow:hidden;
+  }
+  .app{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:26px;
+    position:relative;
+  }
+  .deck{
+    width:min(1180px, 100%);
+    height:min(760px, calc(100vh - 52px));
+    background:var(--card);
+    border-radius:22px;
+    box-shadow:var(--shadow);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    position:relative;
+  }
+  .progress-wrap{
+    height:8px;
+    background:#dbeafe;
+    flex:0 0 auto;
+  }
+  .progress{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--blue),#60a5fa);
+    transition:width .35s ease;
+  }
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 24px 10px;
+    border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg, rgba(249,250,251,0.9), rgba(255,255,255,0.85));
+    backdrop-filter: blur(6px);
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
+  }
+  .brand-badge{
+    width:34px;
+    height:34px;
+    border-radius:10px;
+    background:linear-gradient(135deg,var(--blue),#60a5fa);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-weight:700;
+    letter-spacing:.3px;
+    box-shadow:0 10px 18px rgba(37,99,235,.24);
+    flex:0 0 auto;
+  }
+  .brand-text{
+    min-width:0;
+  }
+  .brand-text h1{
+    margin:0;
+    font-size:15px;
+    line-height:1.2;
+    font-weight:700;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .brand-text p{
+    margin:2px 0 0;
+    color:var(--muted);
+    font-size:12px;
+  }
+  .counter{
+    font-size:13px;
+    color:var(--muted);
+    font-weight:600;
+  }
+
+  .slides{
+    position:relative;
+    flex:1 1 auto;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at top right, rgba(96,165,250,.08), transparent 24%),
+      radial-gradient(circle at bottom left, rgba(37,99,235,.05), transparent 26%);
+  }
+  .slide{
+    position:absolute;
+    inset:0;
+    padding:36px 46px 28px;
+    opacity:0;
+    visibility:hidden;
+    transform:translateX(24px) scale(.995);
+    transition:opacity .45s ease, transform .45s ease, visibility .45s ease;
+    overflow:auto;
+  }
+  .slide.active{
+    opacity:1;
+    visibility:visible;
+    transform:translateX(0) scale(1);
+  }
+  .slide h2{
+    margin:0 0 8px;
+    font-size:33px;
+    line-height:1.15;
+    letter-spacing:-.02em;
+  }
+  .slide h3{
+    margin:0 0 12px;
+    font-size:22px;
+    line-height:1.2;
+  }
+  .subtitle{
+    color:var(--muted);
+    font-size:18px;
+    margin-bottom:22px;
+  }
+  .lead{
+    font-size:18px;
+    line-height:1.6;
+    color:#1f2937;
+  }
+  .grid-2{
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:24px;
+    align-items:start;
+  }
+  .grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+  }
+  .card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:18px 18px;
+    box-shadow:0 8px 20px rgba(2,6,23,.04);
+  }
+  .soft{
+    background:linear-gradient(180deg,#ffffff 0%, #f9fafb 100%);
+  }
+  .accent{
+    border-left:5px solid var(--blue);
+  }
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border-radius:999px;
+    background:#eff6ff;
+    color:var(--blue2);
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:14px;
+  }
+  ul{
+    margin:10px 0 0 18px;
+    padding:0;
+  }
+  li{
+    margin:8px 0;
+    line-height:1.5;
+  }
+  .kpis{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-top:16px;
+  }
+  .kpi{
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:18px;
+    background:linear-gradient(180deg,#fff,#f8fafc);
+  }
+  .kpi .num{
+    font-size:30px;
+    font-weight:800;
+    color:var(--blue2);
+    margin-bottom:6px;
+  }
+  .kpi .lbl{
+    color:var(--muted);
+    font-size:13px;
+    font-weight:600;
+  }
+
+  table{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0;
+    font-size:13px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 6px 16px rgba(2,6,23,.04);
+  }
+  th, td{
+    padding:11px 12px;
+    text-align:left;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+  }
+  th{
+    background:#f8fafc;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:#374151;
+  }
+  tr:last-child td{border-bottom:none}
+  .table-note{
+    margin-top:10px;
+    color:var(--muted);
+    font-size:12px;
+  }
+  .tag{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:700;
+    white-space:nowrap;
+  }
+  .tag.blue{background:#dbeafe;color:#1d4ed8}
+  .tag.green{background:#d1fae5;color:#065f46}
+  .tag.amber{background:#fef3c7;color:#92400e}
+  .tag.gray{background:#f3f4f6;color:#374151}
+
+  .workflow{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+  }
+  .step{
+    background:linear-gradient(180deg,#fff,#f9fafb);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:16px;
+    position:relative;
+    min-height:134px;
+  }
+  .step-num{
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    color:#fff;
+    background:var(--blue);
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:10px;
+  }
+  .step h4{
+    margin:0 0 8px;
+    font-size:15px;
+  }
+  .step p{
+    margin:0;
+    color:#4b5563;
+    font-size:13px;
+    line-height:1.5;
+  }
+
+  pre{
+    margin:0;
+    background:var(--code);
+    color:#e5eefc;
+    border-radius:16px;
+    padding:18px;
+    font-size:13px;
+    line-height:1.5;
+    overflow:auto;
+    border:1px solid rgba(255,255,255,.06);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+  }
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+  .code-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+  }
+
+  .footer-controls{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 18px 16px;
+    border-top:1px solid var(--line);
+    background:#fff;
+    flex:0 0 auto;
+  }
+  .hint{
+    color:var(--muted);
+    font-size:12px;
+  }
+  .btns{
+    display:flex;
+    gap:10px;
+  }
+  button{
+    border:none;
+    border-radius:12px;
+    padding:10px 16px;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    transition:transform .15s ease, opacity .15s ease, background .15s ease;
+  }
+  button:hover{transform:translateY(-1px)}
+  button:active{transform:translateY(0)}
+  .btn-secondary{
+    background:#eef2ff;
+    color:#1f2937;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--blue),#60a5fa);
+    color:#fff;
+    box-shadow:0 10px 20px rgba(37,99,235,.22);
+  }
+  .btn-ghost{
+    background:#f3f4f6;
+    color:#111827;
+  }
+  .title-slide{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:24px;
+    align-items:center;
+    height:100%;
+  }
+  .hero{
+    padding-right:10px;
+  }
+  .eyebrow{
+    display:inline-block;
+    padding:8px 12px;
+    border-radius:999px;
+    background:#eff6ff;
+    color:var(--blue2);
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:.02em;
+    margin-bottom:16px;
+  }
+  .hero h2{
+    font-size:44px;
+    margin-bottom:12px;
+  }
+  .hero .subtitle{
+    font-size:22px;
+    margin-bottom:18px;
+  }
+  .hero p{
+    color:#374151;
+    font-size:18px;
+    line-height:1.65;
+  }
+  .visual{
+    background:linear-gradient(180deg,#f8fbff,#eef4ff);
+    border:1px solid #dbeafe;
+    border-radius:24px;
+    min-height:420px;
+    padding:24px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.8);
+  }
+  .stack-demo{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-top:10px;
+  }
+  .dataset{
+    border-radius:16px;
+    padding:14px 16px;
+    background:#fff;
+    border:1px solid #dbeafe;
+    box-shadow:0 8px 18px rgba(37,99,235,.08);
+  }
+  .dataset strong{display:block; margin-bottom:4px}
+  .arrow{
+    text-align:center;
+    color:var(--blue2);
+    font-size:28px;
+    font-weight:900;
+  }
+  .big-note{
+    margin-top:16px;
+    padding:14px 16px;
+    border-radius:16px;
+    background:#fff;
+    border:1px solid #dbeafe;
+    color:#1e3a8a;
+    font-weight:700;
+  }
+  .quote{
+    padding:16px 18px;
+    border-left:5px solid var(--green);
+    background:#ecfdf5;
+    border-radius:12px;
+    color:#065f46;
+    margin-top:16px;
+    font-weight:700;
+  }
+  .checklist{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .check{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    padding:12px 14px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#fff;
+  }
+  .check .icon{
+    width:22px;height:22px;border-radius:50%;
+    display:grid;place-items:center;
+    background:#d1fae5;color:#065f46;font-weight:900;font-size:13px;flex:0 0 auto;
+  }
+  .small{
+    font-size:12px;color:var(--muted)
+  }
+  a{color:var(--blue2);text-decoration:none}
+  .bio{
+    font-size:18px;
+    line-height:1.7;
+    color:#1f2937;
+  }
+
+  @media (max-width: 960px){
+    .deck{height:calc(100vh - 24px); border-radius:16px}
+    .slide{padding:24px 22px 20px}
+    .title-slide,.grid-2,.code-grid,.checklist{grid-template-columns:1fr}
+    .grid-3,.workflow,.kpis{grid-template-columns:1fr}
+    .hero h2{font-size:34px}
+    .slide h2{font-size:28px}
+    .topbar{padding:12px 16px 10px}
+    .footer-controls{padding:10px 12px 12px; flex-wrap:wrap; gap:10px}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="deck" id="deck">
+    <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-badge">ISS</div>
+        <div class="brand-text">
+          <h1>Integrated Summary of Safety Training Deck</h1>
+          <p>Clinical, statistical, and data-structure concepts for multi-study pooled safety analysis</p>
+        </div>
+      </div>
+      <div class="counter" id="counter">1 / 16</div>
+    </div>
+
+    <div class="slides">
+      <section class="slide active">
+        <div class="title-slide">
+          <div class="hero">
+            <div class="eyebrow">A Clinical &amp; Statistical Guide for Researchers</div>
+            <h2>Understanding Tables, Data, and Statistics</h2>
+            <div class="subtitle">Topic focus: <strong>Integrated Summary of Safety (ISS)</strong></div>
+            <p>
+              This educational slide deck explains how safety data are combined across studies, how pooled ADAE datasets are built, and how clinicians, medical doctors, and researchers can interpret the resulting summaries.
+            </p>
+            <div class="quote">Press Play to begin</div>
+          </div>
+          <div class="visual">
+            <div>
+              <div class="pill">Corporate-style overview</div>
+              <h3 style="margin-top:0">From individual studies to one pooled ISS safety dataset</h3>
+              <p class="lead" style="font-size:16px;margin-top:0">
+                The revised deck explicitly demonstrates that <strong>multiple studies</strong> contribute similar ADAE datasets that are first <strong>harmonized</strong> and then <strong>stacked together</strong> into a pooled ISS ADAE dataset.
+              </p>
+            </div>
+            <div class="stack-demo">
+              <div class="dataset"><strong>STUDY-001 ADAE</strong><span class="small">Standardize variables, coding, timing, treatment labels</span></div>
+              <div class="dataset"><strong>STUDY-002 ADAE</strong><span class="small">Map study-specific conventions to common pooled rules</span></div>
+              <div class="dataset"><strong>STUDY-003 ADAE</strong><span class="small">Retain common core variables for integrated analysis</span></div>
+              <div class="arrow">↓</div>
+              <div class="dataset" style="border-color:#93c5fd;background:linear-gradient(180deg,#fff,#eff6ff)">
+                <strong>POOLED ISS ADAE</strong>
+                <span class="small">Analysis-ready multi-study adverse event dataset</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="pill">Slide 2</div>
+        <h2>What is an ISS?</h2>
+        <div class="grid-2">
+          <div class="card soft accent">
+            <p class="lead">
+              An <strong>Integrated Summary of Safety (ISS)</strong> is a regulatory and clinical analysis framework that <strong>pools safety data across multiple studies</strong> to provide a broader view of a drug's adverse event profile.
+            </p>
+            <ul>
+              <li>It is not limited to one trial.</li>
+              <li>It usually includes several studies judged to be in scope for pooled safety analysis.</li>
+              <li>Common examples include pooling ADSL and ADAE across phase II/III or supportive studies.</li>
+              <li>The goal is a more stable, interpretable overall safety picture for clinicians, statisticians, and reviewers.</li>
+            </ul>
+          </div>
+          <div>
+            <div class="kpis">
+              <div class="kpi">
+                <div class="num">3+</div>
+                <div class="lbl">Studies often included in a simple teaching example</div>
+              </div>
+              <div class="kpi">
+                <div class="num">1</div>
+                <div class="lbl">Pooled ADAE dataset for integrated AE summaries</div>
+              </div>
+              <div class="kpi">
+                <div class="num">Many</div>
+                <div class="lbl">Safety endpoints, listings, and regulatory tables</div>
+              </div>
+            </div>
+            <div class="big-note">
+              Key idea: ISS means the deck explicitly handles <strong>multiple-study data integration</strong>, not just a single-study ADAE example.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="pill">Slide 3</div>
+        <h2>Why pool safety data across studies?</h2>
+        <div class="grid-3">
+          <div class="card soft">
+            <h3>Clinical visibility</h3>
+            <p class="lead" style="font-size:16px">Rare or less frequent adverse events may be easier to observe when the denominator becomes larger across multiple studies.</p>
+          </div>
+          <div class="card soft">
+            <h3>Statistical stability</h3>
+            <p class="lead" style="font-size:16px">Pooling can improve precision of descriptive safety summaries and support more robust subgroup views.</p>
+          </div>
+          <div class="card soft">
+            <h3>Regulatory communication</h3>
+            <p class="lead" style="font-size:16px">Reviewers often want an integrated understanding of safety beyond any single protocol.</p>
+          </div>
+        </div>
+        <div class="quote">
+          Important note: <strong>Pooling is not just stacking.</strong> Before datasets are appended, studies must be harmonized for variables, coding dictionaries, timing rules, treatment mapping, and analysis conventions.
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="pill">Slide 4</div>
+        <h2>Core datasets in a pooled ISS safety analysis</h2>
+        <div class="grid-2">
+          <div class="card soft">
+            <h3>ADSL</h3>
+            <ul>
+              <li>One record per subject</li>
+              <li>Treatment assignment and pooled treatment variables</li>
+              <li>Dates, populations, and stratification context</li>
+              <li>Supports denominators and subject-level joins</li>
+            </ul>
+          </div>
+          <div class="card soft">
+            <h3>ADAE</h3>
+            <ul>
+              <li>One or more records per subject adverse event</li>
+              <li>Terms, coded terms, seriousness, severity, timing</li>
+              <li>Often the main source for pooled safety summaries</li>
+              <li>Built from multiple study-level ADAE datasets in ISS</li>
+            </ul>
+          </div>
+        </div>
+        <div class="big-note">
+          In this revised deck, the pooled ISS ADAE is explicitly shown as the result of combining <strong>ADAE from STUDY-001, STUDY-002, and STUDY-003</strong> after standardization.
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="pill">Slide 5</div>
+        <h2>How multiple study ADAE datasets come together</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Source dataset</th>
+              <th>Example STUDYID</th>
+              <th>Example records / variables</th>
+              <th>Harmonization needed</th>
+              <th>Output role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>adam_study01.adae</code></td>
+              <td>STUDY-001</td>
+              <td>USUBJID, AETERM, AEDECOD, ASTDT, AESER</td>
+              <td>Align variable attributes and coding version</td>
+              <td><span class="tag blue">Input to pooled ADAE</span></td>
+            </tr>
+            <tr>
+              <td><code>adam_study02.adae</code></td>
+              <td>STUDY-002</td>
+              <td>Same structure with study-specific treatment labels</td>
+              <td>Map treatment groups</td>
+              <td><span class="tag blue">Input to pooled ADAE</span></td>
+            </tr>
+            <tr>
+              <td><code>adam_study03.adae</code></td>
+              <td>STUDY-003</td>
+              <td>Same core ADAE variables, possible extra variables</td>
+              <td>Keep common variables, document extras</td>
+              <td><span class="tag blue">Input to pooled ADAE</span></td>
+            </tr>
+            <tr>
+              <td><code>pooled adae_iss</code></td>
+              <td>MULTI-STUDY</td>
+              <td>Standardized STUDYID + USUBJID + AE variables</td>
+              <td>Final pooled structure</td>
+              <td><span class="tag green">Analysis-ready ISS ADAE</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="table-note">
+          This table makes the multiple-study concept explicit: several similarly structured study-level ADAE datasets are standardized and then integrated into one pooled ISS ADAE dataset.
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="pill">Slide 6</div>
+        <h2>Data structure concept: vertical stacking after harmonization</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>STUDYID</th>
+              <th>USUBJID</th>
+              <th>AETERM</th>
+              <th>AEDECOD</th>
+              <th>ASTDT</th>
+              <th>TRT01A</th>
+              <th>Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>STUDY-001</td>
+              <td>STUDY-001-1001</td>
+              <td>Headache</td>
+              <td>Headache</td>
+              <td>2024-01-12</td>
+              <td>Drug A</td>
+              <td><span class="tag gray">study01 ADAE</span></td>
+            </tr>
+            <tr>
+              <td>STUDY-001</td>
+              <td>STUDY-001-1002</td>
+              <td>Nausea</td>
+              <td>Nausea</td>
+              <td>2024-01-13</td>
+              <td>Placebo</td>
+              <td><span class="tag gray">study01 ADAE</span></td>
+            </tr>
+            <tr>
+              <td>STUDY-002</td>
+              <td>STUDY-002-2004</td>
+              <td>Dizziness</td>
+              <td>Dizziness</td>
+              <td>2024-02-03</td>
+              <td>Drug A</td>
+              <td><span class="tag gray">study02 ADAE</span></td>
+            </tr>
+            <tr>
+              <td>STUDY-002</td>
+              <td>STUDY-002-2008</td>
+              <td>Rash</td>
+              <td>Rash</td>
+              <td>2024-02-07</td>
+              <td>Comparator</td>
+              <td><span class="tag gray">study02 ADAE</span></td>
+            </tr>
+            <tr>
+              <td>STUDY-003</td>
+              <td>STUDY-003-3010</td>
+              <td>Pyrexia</td>
+              <td>Pyrexia</td>
+              <td>2024-03-01</td>
+              <td>Drug A</td>
+              <td><span class="tag gray">study03 ADAE</span></td>
+            </tr>
+            <tr>
+              <td>STUDY-003</td>
+              <td>STUDY-003-3012</td>
+              <td>Fatigue</td>
+              <td>Fatigue</td>
+              <td>2024-03-05</td>
+              <td>Placebo</td>
+              <td><span class="tag gray">study03 ADAE</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="quote">
+          Conceptually, this is <strong>vertical concatenation</strong> of standardized ADAE records from multiple studies into one pooled structure.
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="pill">Slide 7</div>
+        <h2>What must be harmonized before stacking?</h2>
+        <div class="grid-2">
+          <div class="card soft">
+            <h3>Data standards</h3>
+            <ul>
+              <li>Variable names and labels</li>
+              <li>Variable types and lengths</li>
+              <li>Date and datetime formats</li>
+              <li>Controlled terminology and MedDRA version alignment</li>
+            </ul>
+          </div>
+          <div class="card soft">
+            <h3>Analysis conventions</h3>
+            <ul>
+              <li>Treatment mapping to pooled groups</li>
+              <li>On-treatment timing rules</li>
+              <li>Population flags and inclusion criteria</li>
+              <li>Definitions for treatment-emergent adverse events</li>
+            </ul>
+          </div>
+        </div>
+        <div class="big-note">
+          Practical teaching message: <strong>pooling = harmonize first, then append, then derive pooled analysis variables.</strong>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="pill">Slide 8</div>
+        <h2>Programming workflow for pooled ISS ADAE</h2>
+        <div class="workflow">
+          <div class="step">
+            <div class="step-num">1</div>
+            <h4>Identify in-scope studies</h4>
+            <p>Select the studies appropriate for the integrated safety population and define inclusion rules.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <h4>Load each study's ADSL and ADAE</h4>
+            <p>Bring in study-level subject and adverse event data separately for each protocol.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <h4>Standardize names, types, terminology</h4>
+            <p>Align common columns and normalize controlled terminology and coding standards.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <h4>Derive common treatment and timing variables</h4>
+            <p>Create pooled treatment variables and timing logic that work across studies.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <h4>Append / stack ADAE across studies</h4>
+            <p>Concatenate standardized ADAE datasets into one multi-study pooled ADAE.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <h4>Merge subject context from pooled ADSL</h4>
+            <p>Add subject-level treatment and population flags into the pooled AE structure.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">7</div>
+            <h4>Derive TRTEMFL and pooled groups</h4>
+            <p>Apply integrated analysis definitions for treatment-emergent events and pooled categories.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">8</div>
+            <h4>Run QC and produce summaries</h4>
+            <p>Validate the integrated dataset and generate tables, listings, and reviewer-ready outputs.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="pill">Slide 9</div>
+        <h2>Illustrative SAS logic for multiple-study pooling</h2>
+        <pre><code>/* Study-level subject datasets */
+data adsl_s1; set adam_study01.adsl; studyid="STUDY-001"; run;
+data adsl_s2; set adam_study02.adsl; studyid="STUDY-002"; run;
+data adsl_s3; set adam_study03.adsl; studyid="STUDY-003"; run;
+
+/* Study-level AE datasets */
+data adae_s1; set adam_study01.adae; studyid="STUDY-001"; run;
+data adae_s2; set adam_study02.adae; studyid="STUDY-002"; run;
+data adae_s3; set adam_study03.adae; studyid="STUDY-003"; run;
+
+/* Standardize common variables for pooling */
+data adsl_s1_std adsl_s2_std adsl_s3_std;
+  set adsl_s1(in=a) adsl_s2(in=b) adsl_s3(in=c);
+  length trt_pool $20;
+  if trt01a in ("Drug A","Active","Treatment A") then trt_pool="Drug A";
+  else if trt01a in ("Placebo","PBO") then trt_pool="Placebo";
+  else trt_pool="Comparator";
+  if a then output adsl_s1_std;
+  else if b then output adsl_s2_std;
+  else if c then output adsl_s3_std;
+run;
+
+data adae_s1_std adae_s2_std adae_s3_std;
+  set adae_s1(in=a) adae_s2(in=b) adae_s3(in=c);
+  length aedecod $200 aeterm $200;
+  format astdt yymmdd10.;
+  if a then output adae_s1_std;
+  else if b then output adae_s2_std;
+  else if c then output adae_s3_std;
+run;
+
+/* Append / stack multiple studies into pooled datasets */
+data adsl_pool;
+  set adsl_s1_std adsl_s2_std adsl_s3_std;
+run;
+
+data adae_pool;
+  set adae_s1_std adae_s2_std adae_s3_std;
+run;
+
+proc sort data=adsl_pool; by studyid usubjid; run;
+proc sort data=adae_pool; by studyid usubjid; run;
+
+/* Merge pooled subject context into pooled ADAE */
+data adae_iss;
+  merge adae_pool(in=ae) adsl_pool(in=sl keep=studyid usubjid trt_pool trtsdt trtedt saffl);
+  by studyid usubjid;
+  if ae and saffl="Y";
+
+  if astdt >= trtsdt then trtemfl="Y";
+  else trtemfl="N";
+run;</code></pre>
+        <div class="table-note">This is generic teaching code only. The central point is the explicit use of multiple study-level ADAE inputs and <code>set adae_s1 adae_s2 adae_s3;</code> for pooled construction.</div>
+      </section>
+
+      <section class="slide">
+        <div class="pill">Slide 10</div>
+        <h2>Illustrative R logic for multiple-study pooling</h2>
+        <pre><code># Study-level datasets already read into memory:
+# study1_adsl, study2_adsl, study3_adsl
+# study1_adae, study2_adae, study3_adae
+
+standardize_adsl &lt;- function(df, studyid_value) {
+  df$STUDYID &lt;- studyid_value
+  df$TRT_POOL &lt;- ifelse(df$TRT01A %in% c("Drug A","Active","Treatment A"), "Drug A",
+                 ifelse(df$TRT01A %in% c("Placebo","PBO"), "Placebo", "Comparator"))
+  keep &lt;- c("STUDYID","USUBJID","TRT01A","TRT_POOL","TRTSDT","TRTEDT","SAFFL")
+  df[, intersect(keep, names(df)), drop = FALSE]
+}
+
+standardize_adae &lt;- function(df, studyid_value) {
+  df$STUDYID &lt;- studyid_value
+  keep &lt;- c("STUDYID","USUBJID","AETERM","AEDECOD","ASTDT","AESER")
+  df[, intersect(keep, names(df)), drop = FALSE]
+}
+
+adsl_s1 &lt;- standardize_adsl(study1_adsl, "STUDY-001")
+adsl_s2 &lt;- standardize_adsl(study2_adsl, "STUDY-002")
+adsl_s3 &lt;- standardize_adsl(study3_adsl, "STUDY-003")
+
+adae_s1 &lt;- standardize_adae(study1_adae, "STUDY-001")
+adae_s2 &lt;- standardize_adae(study2_adae, "STUDY-002")
+adae_s3 &lt;- standardize_adae(study3_adae, "STUDY-003")
+
+# Append / stack multiple studies
+adsl_pool &lt;- rbind(adsl_s1, adsl_s2, adsl_s3)
+adae_pool &lt;- rbind(adae_s1, adae_s2, adae_s3)
+
+# Merge pooled subject context into pooled ADAE
+adae_iss &lt;- merge(
+  adae_pool,
+  adsl_pool[, c("STUDYID","USUBJID","TRT_POOL","TRTSDT","TRTEDT","SAFFL")],
+  by = c("STUDYID","USUBJID"),
+  all.x = TRUE
+)
+
+adae_iss &lt;- subset(adae_iss, SAFFL == "Y")
+adae_iss$TRTEMFL &lt;- ifelse(adae_iss$ASTDT &gt;= adae_iss$TRTSDT, "Y", "N")</code></pre>
+        <div class="table-note">Equivalent logic can also be written using <code>bind_rows()</code> in a tidyverse workflow. The educational point is explicit multi-study selection, standardization, and row-binding.</div>
+      </section>
+
+      <section class="slide">
+        <div class="pill">Slide 11</div>
+        <h2>From pooled ADAE to pooled safety tables</h2>
+        <div class="grid-2">
+          <div class="card soft">
+            <h3>Typical summaries generated</h3>
+            <ul>
+              <li>Any treatment-emergent adverse event</li>
+              <li>Serious adverse events</li>
+              <li>Severe adverse events</li>
+              <li>AEs leading to discontinuation</li>
+              <li>System organ class / preferred term summaries</li>
+            </ul>
+          </div>
+          <div class="card soft">
+            <h3>Clinical interpretation reminder</h3>
+            <ul>
+              <li>Counts are subject-based for many summary tables</li>
+              <li>One subject may have multiple event records</li>
+              <li>Pooled denominators must be defined consistently</li>
+              <li>Integrated timing rules affect treatment-emergent classification</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="pill">Slide 12</div>
+        <h2>Illustrative pooled safety counts</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Summary category</th>
+              <th>Drug A (N=642)</th>
+              <th>Placebo (N=318)</th>
+              <th>Comparator (N=205)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Any TEAE</td>
+              <td>382 (59.5%)</td>
+              <td>161 (50.6%)</td>
+              <td>108 (52.7%)</td>
+            </tr>
+            <tr>
+              <td>Serious TEAE</td>
+              <td>46 (7.2%)</td>
+              <td>18 (5.7%)</td>
+              <td>14 (6.8%)</td>
+            </tr>
+            <tr>
+              <td>Grade 3+ TEAE</td>
+              <td>71 (11.1%)</td>
+              <td>24 (7.5%)</td>
+              <td>19 (9.3%)</td>
+            </tr>
+            <tr>
+              <td>TEAE leading to discontinuation</td>
+              <td>29 (4.5%)</td>
+              <td>8 (2.5%)</td>
+              <td>9 (4.4%)</td>
+            </tr>
+            <tr>
+              <td>Drug-related TEAE</td>
+              <td>201 (31.3%)</td>
+              <td>73 (23.0%)</td>
+              <td>54 (26.3%)</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="table-note">Illustrative values only. In practice, these counts would be generated from the pooled ISS ADAE linked to pooled ADSL.</div>
+      </section>
+
+      <section class="slide">
+        <div class="pill">Slide 13</div>
+        <h2>Clinical reading of pooled safety outputs</h2>
+        <div class="grid-3">
+          <div class="card soft">
+            <h3>Look at incidence</h3>
+            <p class="lead" style="font-size:16px">Start with how many subjects experienced at least one event in each pooled treatment group.</p>
+          </div>
+          <div class="card soft">
+            <h3>Look at severity and seriousness</h3>
+            <p class="lead" style="font-size:16px">Focus on medically important events, serious events, and severe events when discussing benefit-risk.</p>
+          </div>
+          <div class="card soft">
+            <h3>Look at comparability</h3>
+            <p class="lead" style="font-size:16px">Consider pooled treatment mapping and study composition when interpreting differences across groups.</p>
+          </div>
+        </div>
+        <div class="quote">
+          Clinicians should remember that the pooled dataset reflects <strong>multiple contributing studies</strong>; the integrated result is broader than any single protocol.
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="pill">Slide 14</div>
+        <h2>QC and regulatory-authoring checklist</h2>
+        <div class="checklist">
+          <div class="check"><div class="icon">✓</div><div><strong>Confirm study inclusion list</strong><br><span class="small">Document which studies are in scope for ISS and why.</span></div></div>
+          <div class="check"><div class="icon">✓</div><div><strong>Verify harmonized metadata</strong><br><span class="small">Check names, types, labels, formats, and controlled terminology.</span></div></div>
+          <div class="check"><div class="icon">✓</div><div><strong>Validate treatment mapping</strong><br><span class="small">Ensure study-specific arms roll correctly into pooled groups.</span></div></div>
+          <div class="check"><div class="icon">✓</div><div><strong>Review timing rules</strong><br><span class="small">Make sure treatment-emergent definitions are consistent across studies.</span></div></div>
+          <div class="check"><div class="icon">✓</div><div><strong>Reconcile pooled counts</strong><br><span class="small">Subject counts and event counts should match source and output expectations.</span></div></div>
+          <div class="check"><div class="icon">✓</div><div><strong>Perform independent QC</strong><br><span class="small">Replicate pooled tables, listings, and key derivations.</span></div></div>
+          <div class="check"><div class="icon">✓</div><div><strong>Document assumptions</strong><br><span class="small">Capture pooling logic, exclusions, and versioning decisions.</span></div></div>
+          <div class="check"><div class="icon">✓</div><div><strong>Prepare reviewer-ready narratives</strong><br><span class="small">Explain clearly that pooled ADAE came from multiple harmonized study datasets.</span></div></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="pill">Slide 15</div>
+        <h2>Key take-home messages</h2>
+        <div class="card soft accent">
+          <ul>
+            <li><strong>Yes, ISS explicitly involves multiple-study handling.</strong></li>
+            <li>Study-level ADAE datasets are not simply dumped together without preparation.</li>
+            <li>They are first <strong>harmonized</strong> for variables, coding, timing rules, and treatment mapping.</li>
+            <li>Then they are <strong>stacked vertically</strong> into one pooled ADAE structure.</li>
+            <li>Pooled ADSL provides subject-level context used to derive integrated safety analysis variables.</li>
+            <li>The final output supports clinician-facing and regulator-facing safety interpretation.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="pill">Slide 16</div>
+        <h2>Thank you</h2>
+        <div class="grid-2">
+          <div class="card soft">
+            <h3>Support this educational work</h3>
+            <p class="lead" style="font-size:17px">
+              If this training deck was useful, you can support the creator here:
+            </p>
+            <p class="lead" style="font-size:18px;font-weight:700">
+              <a href="https://buymeacoffee.com/ohchenwei" target="_blank">https://buymeacoffee.com/ohchenwei</a>
+            </p>
+          </div>
+          <div class="card soft">
+            <h3>Presenter bio</h3>
+            <p class="bio">
+              I am Chen Wei, a pharmacist currently involved in drug development as a statistical programmer. I operate a Data Clinic for medical doctors, helping them achieve success in publication. Website:
+              <a href="https://ohstatisticdataclinic.github.io/" target="_blank">https://ohstatisticdataclinic.github.io/</a>
+            </p>
+          </div>
+        </div>
+        <div class="big-note">End of deck. Use Back/Next, keyboard arrows, swipe, or Play/Pause to review again.</div>
+      </section>
+    </div>
+
+    <div class="footer-controls">
+      <div class="hint">Keyboard: ← → &nbsp;|&nbsp; Space: Play/Pause &nbsp;|&nbsp; Swipe on touch devices</div>
+      <div class="btns">
+        <button class="btn-secondary" id="prevBtn">Back</button>
+        <button class="btn-ghost" id="playBtn">Play</button>
+        <button class="btn-primary" id="nextBtn">Next</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const playBtn = document.getElementById('playBtn');
+
+  let index = 0;
+  let autoplay = false;
+  let timer = null;
+  const intervalMs = 10000;
+
+  function updateUI() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === index));
+    counter.textContent = (index + 1) + ' / ' + slides.length;
+    progress.style.width = ((index + 1) / slides.length * 100) + '%';
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === slides.length - 1;
+    prevBtn.style.opacity = prevBtn.disabled ? .45 : 1;
+    nextBtn.style.opacity = nextBtn.disabled ? .45 : 1;
+    playBtn.textContent = autoplay ? 'Pause' : 'Play';
+  }
+
+  function goToSlide(i){
+    index = Math.max(0, Math.min(slides.length - 1, i));
+    updateUI();
+  }
+
+  function nextSlide(){
+    if(index < slides.length - 1){
+      goToSlide(index + 1);
+    } else {
+      goToSlide(0);
+    }
+  }
+
+  function prevSlide(){
+    if(index > 0) goToSlide(index - 1);
+  }
+
+  function stopAutoplay(){
+    autoplay = false;
+    if(timer) clearInterval(timer);
+    timer = null;
+    updateUI();
+  }
+
+  function startAutoplay(){
+    autoplay = true;
+    if(timer) clearInterval(timer);
+    timer = setInterval(nextSlide, intervalMs);
+    updateUI();
+  }
+
+  function toggleAutoplay(){
+    autoplay ? stopAutoplay() : startAutoplay();
+  }
+
+  prevBtn.addEventListener('click', prevSlide);
+  nextBtn.addEventListener('click', nextSlide);
+  playBtn.addEventListener('click', toggleAutoplay);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); nextSlide(); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+    else if (e.key === ' ' || e.code === 'Space') { e.preventDefault(); toggleAutoplay(); }
+    else if (/^[1-9]$/.test(e.key)) {
+      const num = parseInt(e.key,10) - 1;
+      if(num < slides.length) goToSlide(num);
+    }
+  });
+
+  let touchStartX = 0;
+  let touchEndX = 0;
+  let touchStartY = 0;
+  let touchEndY = 0;
+  const deck = document.getElementById('deck');
+
+  deck.addEventListener('touchstart', (e) => {
+    const t = e.changedTouches[0];
+    touchStartX = t.clientX;
+    touchStartY = t.clientY;
+  }, {passive:true});
+
+  deck.addEventListener('touchend', (e) => {
+    const t = e.changedTouches[0];
+    touchEndX = t.clientX;
+    touchEndY = t.clientY;
+    const dx = touchEndX - touchStartX;
+    const dy = touchEndY - touchStartY;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+      if (dx < 0) nextSlide();
+      else prevSlide();
+    }
+  }, {passive:true});
+
+  window.goToSlide = goToSlide;
+  updateUI();
+  startAutoplay();
+})();
+</script>
+</body>
+</html>
